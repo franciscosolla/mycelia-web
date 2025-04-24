@@ -1,5 +1,7 @@
 # Mycelia
 
+[Live Project → https://mycelia.solla.dev](https://mycelia.solla.dev)
+
 **Mycelia** is a personal blockchain learning playground — a dApp built with Next.js and ethers.js, designed to grow as I explore and learn more about crypto, DeFi, and decentralized protocols.
 
 > Like a mycelial network, this project will organically expand across chains, technologies, and ideas.
