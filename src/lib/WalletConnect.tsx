@@ -6,9 +6,9 @@ export const WalletConnect = () => {
   const { wallet, connectWallet, isConnecting } = useWallet();
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center gap-4">
       <h1 className="text-4xl font-bold">Mycelia</h1>
-      <p className="mt-4 text-lg">Tap into the network</p>
+      <p className="text-lg">Tap into the network</p>
       <Button
         onClick={connectWallet}
         disabled={Boolean(isConnecting || wallet)}
