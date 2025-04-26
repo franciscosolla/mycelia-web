@@ -10,8 +10,8 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
-  useRef,
   useState,
   type PropsWithChildren,
 } from "react";
@@ -24,7 +24,7 @@ type Wallet = {
 };
 
 const Context = createContext<{
-  readonly wallet: Wallet | null;
+  wallet: Wallet | null | undefined;
   connectWallet: () => void;
   isConnecting: boolean;
 }>({
@@ -34,32 +34,45 @@ const Context = createContext<{
 });
 
 export const WalletProvider = ({ children }: PropsWithChildren) => {
-  const walletRef = useRef<Wallet | null>(null);
-  const [connecting, setConnecting] = useState(false);
+  const [wallet, setWallet] = useState<Wallet | null | undefined>(null);
 
   const connectWallet = useCallback(() => {
-    if (!walletRef.current) {
-      setConnecting(true);
+    if (!wallet) {
+      setWallet(undefined);
       connect()
-        .then((wallet) => {
-          walletRef.current = wallet;
-        })
-        .finally(() => setConnecting(false));
+        .then(setWallet)
+        .catch(() => {
+          setWallet(null);
+        });
     }
-  }, []);
+  }, [wallet]);
 
-  const isConnecting = connecting;
+  const isConnecting = wallet === undefined;
 
   const value = useMemo(
     () => ({
-      get wallet() {
-        return walletRef.current;
-      },
+      wallet,
       connectWallet,
       isConnecting,
     }),
-    [connectWallet, isConnecting]
+    [connectWallet, isConnecting, wallet]
   );
+
+  useEffect(() => {
+    if (!window.ethereum) {
+      return;
+    }
+
+    const handleAccountsChanged = (accounts: string[]) => {
+      if (accounts.length === 0) {
+        setWallet(null);
+      }
+    };
+
+    window.ethereum.on("accountsChanged", handleAccountsChanged);
+
+    return () => window.ethereum.off("accountsChanged", handleAccountsChanged);
+  }, [connectWallet]);
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
