@@ -2,19 +2,19 @@ import UniversalProvider from "@walletconnect/universal-provider";
 import { BrowserProvider, type JsonRpcSigner, type Listener } from "ethers";
 import type { Wallet } from "./types";
 
-//  Initialize the provider
-const provider = await UniversalProvider.init({
-  projectId: process.env.NEXT_PUBLIC_REOWN_PROJECT_ID,
-  metadata: {
-    name: "Mycelia",
-    description: "The multichanin network",
-    url: "https://mycelia.solla.dev/",
-    icons: ["https://mycelia.solla.dev/favicon.ico"],
-  },
-});
-
 //  create sub providers for each namespace/chain
 export const connectWalletUniversalProvider = async (): Promise<Wallet> => {
+  //  Initialize the provider
+  const provider = await UniversalProvider.init({
+    projectId: process.env.NEXT_PUBLIC_REOWN_PROJECT_ID,
+    metadata: {
+      name: "Mycelia",
+      description: "The multichanin network",
+      url: "https://mycelia.solla.dev/",
+      icons: ["https://mycelia.solla.dev/favicon.ico"],
+    },
+  });
+
   await provider.connect({
     namespaces: {
       eip155: {
