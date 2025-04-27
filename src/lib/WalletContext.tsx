@@ -30,15 +30,15 @@ export const WalletProvider = ({ children }: PropsWithChildren) => {
     if (!wallet) {
       setWallet(undefined);
 
-      if (window.ethereum) {
-        connectWalletBrowser()
-          .then(setWallet)
-          .catch(() => {
-            setWallet(null);
-          });
-      } else {
-        connectWalletUniversalProvider();
-      }
+      const connectWallet = window.ethereum
+        ? connectWalletBrowser
+        : connectWalletUniversalProvider;
+
+      connectWallet()
+        .then(setWallet)
+        .catch(() => {
+          setWallet(null);
+        });
     }
   }, [wallet]);
 
