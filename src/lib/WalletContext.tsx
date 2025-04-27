@@ -1,12 +1,6 @@
 "use client";
 
 import {
-  BrowserProvider,
-  type JsonRpcSigner,
-  type Listener,
-  type Network,
-} from "ethers";
-import {
   createContext,
   useCallback,
   useContext,
@@ -15,13 +9,9 @@ import {
   useState,
   type PropsWithChildren,
 } from "react";
-
-type Wallet = {
-  address: string;
-  network: Network;
-  getBalance: () => Promise<string>;
-  onBlock: (listener: Listener) => () => void;
-};
+import type { Wallet } from "./types";
+import { connectWalletBrowser } from "./walletConnectBrowser";
+import { connectWalletUniversalProvider } from "./walletConnectUniversalProvider";
 
 const Context = createContext<{
   wallet: Wallet | null | undefined;
@@ -39,11 +29,16 @@ export const WalletProvider = ({ children }: PropsWithChildren) => {
   const connectWallet = useCallback(() => {
     if (!wallet) {
       setWallet(undefined);
-      connect()
-        .then(setWallet)
-        .catch(() => {
-          setWallet(null);
-        });
+
+      if (window.ethereum) {
+        connectWalletBrowser()
+          .then(setWallet)
+          .catch(() => {
+            setWallet(null);
+          });
+      } else {
+        connectWalletUniversalProvider();
+      }
     }
   }, [wallet]);
 
@@ -79,36 +74,4 @@ export const WalletProvider = ({ children }: PropsWithChildren) => {
 
 export const useWallet = () => {
   return useContext(Context);
-};
-
-const connect = async (): Promise<Wallet> => {
-  if (!window) {
-    throw new Error("No window object found");
-  }
-
-  const provider = new BrowserProvider(window.ethereum);
-
-  let signer: JsonRpcSigner;
-
-  const [address, network] = await Promise.all([
-    provider.getSigner().then((s) => {
-      signer = s;
-      return signer.getAddress();
-    }),
-    provider.getNetwork(),
-  ]);
-
-  return {
-    address,
-    network,
-    getBalance() {
-      return provider
-        .getBalance(address)
-        .then((balance) => (Number(balance) / 1e18).toFixed(4));
-    },
-    onBlock(listener: Listener) {
-      provider.on("block", listener);
-      return () => provider.off("block", listener);
-    },
-  };
 };
