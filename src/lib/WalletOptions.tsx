@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import { Connector, useConnect } from "wagmi";
 
@@ -5,15 +6,18 @@ export function WalletOptions() {
   const { connectors, connect } = useConnect();
 
   return (
-    <ul className="flex flex-col gap-2 items-end mb-50">
-      {connectors.map((connector) => (
-        <WalletOption
-          key={connector.uid}
-          connector={connector}
-          onClick={() => connect({ connector })}
-        />
-      ))}
-    </ul>
+    <section className="flex flex-col gap-4 mb-20">
+      <h2 className="text-2xl">Connect wallet to start</h2>
+      <ul className="flex flex-row gap-2 items-end overflow-x-scroll no-scrollbar">
+        {connectors.map((connector) => (
+          <WalletOption
+            key={connector.uid}
+            connector={connector}
+            onClick={() => connect({ connector })}
+          />
+        ))}
+      </ul>
+    </section>
   );
 }
 
@@ -38,7 +42,7 @@ function WalletOption({
       <button
         disabled={!ready}
         onClick={onClick}
-        className="p-1.5 pl-3 pr-8 bg-white text-gray-950 rounded-l-sm hover:pr-10 focus:pr-10 transition-all active:opacity-80"
+        className="flex flex-col justify-end p-2 min-w-40 min-h-22 bg-stone-800 text-stone-50 rounded-2xl border-2 border-stone-800 hover:border-stone-600 transition-all duration-400 active:opacity-80 text-left text-lg"
       >
         {connector.name}
       </button>

@@ -29,7 +29,7 @@ export default function RootLayout({
       <QueryClientProvider>
         <html lang="en">
           <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen flex flex-col`}
+            className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen flex flex-col overflow-hidden`}
           >
             {children}
           </body>
