@@ -1,3 +1,5 @@
+"use client";
+
 import UniversalProvider from "@walletconnect/universal-provider";
 import { BrowserProvider, type JsonRpcSigner, type Listener } from "ethers";
 import type { Wallet } from "./types";

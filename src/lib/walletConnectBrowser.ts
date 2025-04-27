@@ -1,3 +1,4 @@
+"use client";
 import { BrowserProvider, type JsonRpcSigner, type Listener } from "ethers";
 import type { Wallet } from "./types";
 
