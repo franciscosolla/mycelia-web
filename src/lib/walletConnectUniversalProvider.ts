@@ -30,6 +30,17 @@ export const connectWalletUniversalProvider = async (): Promise<Wallet> => {
     },
   });
 
+  const uri = provider.uri; // Get the URI
+
+  if (!uri) {
+    throw new Error("No URI found");
+  }
+
+  const metaMaskDeeplink = `https://metamask.app.link/wc?uri=${encodeURIComponent(
+    uri
+  )}`;
+  window.location.href = metaMaskDeeplink;
+
   const ethersProvider = new BrowserProvider(provider);
 
   let signer: JsonRpcSigner;
