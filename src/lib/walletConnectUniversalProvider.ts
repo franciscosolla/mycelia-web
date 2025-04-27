@@ -11,30 +11,21 @@ const provider = await UniversalProvider.init({
     url: "https://mycelia.solla.dev/",
     icons: ["https://mycelia.solla.dev/favicon.ico"],
   },
-  client: undefined, // optional instance of @walletconnect/sign-client
 });
 
 //  create sub providers for each namespace/chain
 export const connectWalletUniversalProvider = async (): Promise<Wallet> => {
   await provider.connect({
-    optionalNamespaces: {
+    namespaces: {
       eip155: {
-        methods: [
-          "eth_sendTransaction",
-          "eth_signTransaction",
-          "eth_sign",
-          "personal_sign",
-          "eth_signTypedData",
-        ],
-        chains: ["eip155:80001"],
+        methods: ["eth_sendTransaction", "personal_sign", "eth_signTypedData"],
+        chains: ["eip155:1"], // Ethereum Mainnet (eip155:137 for Polygon, etc.)
         events: ["chainChanged", "accountsChanged"],
         rpcMap: {
-          80001: `https://rpc.walletconnect.com?chainId=eip155:80001&projectId=${process.env.NEXT_PUBLIC_REOWN_PROJECT_ID}`,
+          1: "https://rpc.ankr.com/eth",
         },
       },
     },
-    pairingTopic: "<123...topic>", // optional topic to connect to
-    skipPairing: false, // optional to skip pairing ( later it can be resumed by invoking .pair())
   });
 
   const ethersProvider = new BrowserProvider(provider);
