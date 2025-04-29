@@ -1,25 +1,69 @@
 "use client";
-import { useEffect, useState } from "react";
-import { Connector, useAccount, useConnect } from "wagmi";
+import Image from "next/image";
+import { useMemo } from "react";
+import { useAccount, useConnect, type Connector } from "wagmi";
+import { isWalletInstalled, WALLETS, type Wallet } from "./wallets";
 
 export const ConnectWallet = () => {
   const { isConnected } = useAccount();
-
   return isConnected ? null : <WalletOptions />;
 };
 
 const WalletOptions = () => {
   const { connectors, connect } = useConnect();
 
+  const connectorMap = useMemo(
+    () =>
+      connectors.reduce<Record<string, Connector>>(
+        (acc, connector) => ({
+          ...acc,
+          [connector.id]: connector,
+        }),
+        {}
+      ),
+    [connectors]
+  );
+
+  console.log({ connectors, connectorMap });
+
+  const handleConnect = async (wallet: Wallet) => {
+    const connector = connectorMap[wallet.connectorIds[0]];
+
+    console.log({
+      connectors,
+      connectorMap,
+      connector,
+      connectorIds: wallet.connectorIds,
+      id: wallet.connectorIds[0],
+    });
+
+    await connector.getProvider();
+
+    connect({ connector });
+  };
+
+  const wallets = useMemo(
+    () =>
+      WALLETS.reduce<Wallet[]>((acc, wallet) => {
+        if (isWalletInstalled(wallet)) {
+          acc.unshift(wallet);
+        } else {
+          acc.push(wallet);
+        }
+        return acc;
+      }, []),
+    []
+  );
+
   return (
     <section className="flex flex-col gap-4 mb-20">
-      <h2 className="text-2xl">Connect wallet to start</h2>
-      <ul className="flex flex-row gap-2 items-end overflow-x-scroll no-scrollbar">
-        {connectors.map((connector) => (
+      <h2 className="text-2xl font-bold px-2">Tap into the network</h2>
+      <ul className="flex flex-row gap-2 px-2 items-end overflow-x-scroll no-scrollbar">
+        {wallets.map((wallet) => (
           <WalletOption
-            key={connector.uid}
-            connector={connector}
-            onClick={() => connect({ connector })}
+            key={wallet.name}
+            wallet={wallet}
+            onClick={() => handleConnect(wallet)}
           />
         ))}
       </ul>
@@ -28,29 +72,35 @@ const WalletOptions = () => {
 };
 
 const WalletOption = ({
-  connector,
+  wallet,
   onClick,
 }: {
-  connector: Connector;
+  wallet: Wallet;
   onClick: () => void;
 }) => {
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      const provider = await connector.getProvider();
-      setReady(!!provider);
-    })();
-  }, [connector]);
+  const isInstalled = isWalletInstalled(wallet);
 
   return (
     <li>
       <button
-        disabled={!ready}
         onClick={onClick}
-        className="flex flex-col justify-end p-2 min-w-40 min-h-22 bg-stone-800 text-stone-50 rounded-2xl border-2 border-stone-800 hover:border-stone-600 transition-all duration-400 active:opacity-80 text-left text-lg"
+        className="relative flex flex-col justify-end p-2 min-w-32 min-h-32 bg-stone-800 text-stone-50 rounded-2xl border-2 border-stone-800 hover:border-stone-600 transition-all duration-400 active:opacity-80"
       >
-        {connector.name}
+        {isInstalled ? (
+          <div className="absolute top-2 right-2 rounded-full bg-green-500 w-2 h-2" />
+        ) : null}
+
+        {wallet.icon ? (
+          <Image
+            src={wallet.icon}
+            alt={`${wallet.name} logo`}
+            className="w-12 h-12 rounded-lg absolute top-2 left-2"
+            width={12}
+            height={12}
+          />
+        ) : null}
+
+        <h3 className="text-left text-md font-medium">{wallet.name}</h3>
       </button>
     </li>
   );

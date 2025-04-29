@@ -1,4 +1,5 @@
 import { Account } from "@/lib/Account";
+import { Actions } from "@/lib/Actions";
 import { ConnectWallet } from "@/lib/ConnectWallet";
 
 export default function Home() {
@@ -8,7 +9,9 @@ export default function Home() {
         <h1 className="text-2xl font-bold">Mycelia</h1>
         <Account />
       </header>
-      <main className="flex flex-col justify-end flex-1">
+      <main className="flex flex-col flex-1">
+        <Actions />
+        <div className="flex-1" />
         <ConnectWallet />
       </main>
     </>
