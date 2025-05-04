@@ -1,6 +1,7 @@
 {
   "name": "mycelia",
   "version": "0.1.0",
+  "description": "Mycelia Web — A personal Web3 playground for experimenting with wallet connectivity, smart contract interactions, and decentralized UX.",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -8,6 +9,25 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/franciscosolla/mycelia-web"
+  },
+  "keywords": [
+    "web3",
+    "nextjs",
+    "wagmi",
+    "viem",
+    "ethers",
+    "react",
+    "walletconnect",
+    "ethereum",
+    "dapp",
+    "blockchain"
+  ],
+  "author": "Francisco Solla <fsolla@pm.me>",
+  "license": "MIT",
+  "homepage": "https://mycelia.solla.dev",
   "dependencies": {
     "@tanstack/react-query": "^5.74.4",
     "next": "15.3.1",
