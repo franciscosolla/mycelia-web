@@ -57,7 +57,9 @@ const WalletOptions = () => {
 
   return (
     <section className="flex flex-col gap-4 mb-20">
-      <h2 className="text-2xl font-bold px-2">Tap into the network</h2>
+      <h2 className="text-2xl font-bold px-2 text-stone-50">
+        Tap into the network
+      </h2>
       <ul className="flex flex-row gap-2 px-2 items-end overflow-x-scroll no-scrollbar">
         {wallets.map((wallet) => (
           <WalletOption

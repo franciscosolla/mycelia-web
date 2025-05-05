@@ -1,4 +1,3 @@
-import metamaskLogo from "@/public/metamask-logo.svg";
 import { isMobile, isMobileAppAccesible, isServer } from "./devices";
 
 export type Wallet = {
@@ -33,7 +32,7 @@ const phantom = {
 
 const metamask = {
   name: "MetaMask",
-  icon: metamaskLogo,
+  icon: "/metamask-logo.svg",
   connectorIds: ["metaMaskSDK", "injected"],
   desktop: {
     get installed() {
