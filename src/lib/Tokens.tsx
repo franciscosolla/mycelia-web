@@ -3,6 +3,7 @@ import Image from "next/image";
 import { formatUnits, type Address } from "viem";
 import { useTokenBalances } from "./useTokenBalances";
 import { useTokenMetadata } from "./useTokenMetadata";
+import { useTokenUsdPrice } from "./useTokenUsdPrice";
 
 export const Tokens = () => {
   const tokens = useTokenBalances();
@@ -28,9 +29,14 @@ const Token = ({
   balance: string | number | bigint | undefined;
 }) => {
   const { data } = useTokenMetadata(tokenAddress);
+  const { data: usdPrice } = useTokenUsdPrice(tokenAddress);
+
+  if (usdPrice === undefined) {
+    return null;
+  }
 
   return (
-    <div className="relative flex flex-col justify-end p-3 min-h-32 bg-stone-800 text-stone-50 rounded-2xl">
+    <div className="relative flex flex-col justify-end p-3 min-h-34 bg-stone-800 text-stone-50 rounded-2xl gap-1">
       <div className="absolute top-3 left-3 flex flex-row gap-2 items-center">
         {data?.logo ? (
           <Image
@@ -45,10 +51,13 @@ const Token = ({
         )}
         <span className="font-bold">{data?.symbol}</span>
       </div>
-      <h4 className="text-left text-md font-medium whitespace-nowrap w-fit min-w-32">{`${formatUnits(
+      <h4 className="text-left text-xs font-medium whitespace-nowrap w-fit min-w-32">{`${formatUnits(
         (balance as bigint) ?? 0,
         data?.decimals ?? 0
-      )}`}</h4>
+      ).slice(0, 10)}`}</h4>
+      <h3 className="text-left text-xl font-bold whitespace-nowrap w-fit min-w-32">
+        {`$${usdPrice}`}
+      </h3>
     </div>
   );
 };
