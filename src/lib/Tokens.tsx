@@ -3,18 +3,18 @@ import Image from "next/image";
 import { formatUnits, type Address } from "viem";
 import { useTokenBalances } from "./useTokenBalances";
 import { useTokenMetadata } from "./useTokenMetadata";
-import { useTokenUsdPrice } from "./useTokenUsdPrice";
 
 export const Tokens = () => {
   const tokens = useTokenBalances();
 
   return (
     <section className="flex flex-row gap-2 overflow-x-scroll no-scrollbar">
-      {tokens?.map(({ tokenAddress, balance }) => (
+      {tokens?.map(({ tokenAddress, balance, coin }) => (
         <Token
           key={tokenAddress as string}
           tokenAddress={tokenAddress}
           balance={balance}
+          usdPrice={coin?.price}
         />
       ))}
     </section>
@@ -24,27 +24,18 @@ export const Tokens = () => {
 const Token = ({
   tokenAddress,
   balance,
+  usdPrice,
 }: {
   tokenAddress: Address;
   balance: string | number | bigint | undefined;
+  usdPrice: number | undefined;
 }) => {
   const { data: { decimals, logo, name, symbol } = {} } =
     useTokenMetadata(tokenAddress);
-  const { data: usdPrice } = useTokenUsdPrice(tokenAddress);
 
   if (usdPrice === undefined) {
     return null;
   }
-
-  console.log({
-    tokenAddress,
-    balance,
-    decimals,
-    logo,
-    name,
-    symbol,
-    usdPrice,
-  });
 
   const weightedBalance = !decimals
     ? Number(balance)

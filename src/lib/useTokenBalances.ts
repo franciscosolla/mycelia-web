@@ -35,12 +35,46 @@ export const useTokenBalances = () => {
     },
   });
 
+  const { data: coins } = useQuery({
+    queryKey: ["tokenUsdPrice", address],
+    queryFn: () =>
+      fetch(
+        `https://coins.llama.fi/prices/current/ethereum:${tokenAddresses?.join(
+          ",ethereum:"
+        )}`,
+        {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+          },
+        }
+      )
+        .then((res) => res.json() as Promise<DeFiLlamaTokenPriceResponse>)
+        .then((data) => data.coins),
+    staleTime: Infinity,
+    gcTime: Infinity,
+    enabled: !!tokenAddresses?.length,
+  });
+
   return useMemo(
     () =>
       tokenAddresses?.map((tokenAddress, tokenIndex) => ({
         tokenAddress,
         balance: tokenBalances?.[tokenIndex].result,
+        coin: coins?.[`ethereum:${tokenAddress}`],
       })),
-    [tokenAddresses, tokenBalances]
+    [coins, tokenAddresses, tokenBalances]
   );
+};
+
+type DeFiLlamaTokenPriceResponse = {
+  coins: {
+    [key: string]: {
+      price: number;
+      decimals: number;
+      symbol: string;
+      timestamp: number;
+      confidence: number;
+    };
+  };
 };
