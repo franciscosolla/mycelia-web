@@ -28,20 +28,35 @@ const Token = ({
   tokenAddress: Address;
   balance: string | number | bigint | undefined;
 }) => {
-  const { data } = useTokenMetadata(tokenAddress);
+  const { data: { decimals, logo, name, symbol } = {} } =
+    useTokenMetadata(tokenAddress);
   const { data: usdPrice } = useTokenUsdPrice(tokenAddress);
 
   if (usdPrice === undefined) {
     return null;
   }
 
+  console.log({
+    tokenAddress,
+    balance,
+    decimals,
+    logo,
+    name,
+    symbol,
+    usdPrice,
+  });
+
+  const weightedBalance = !decimals
+    ? Number(balance)
+    : Number(balance) / 10 ** decimals;
+
   return (
     <div className="relative flex flex-col justify-end p-3 min-h-34 bg-stone-800 text-stone-50 rounded-2xl gap-1">
       <div className="absolute top-3 left-3 flex flex-row gap-2 items-center">
-        {data?.logo ? (
+        {logo ? (
           <Image
-            src={data.logo}
-            alt={`${data.name} logo`}
+            src={logo}
+            alt={`${name} logo`}
             className="w-11 h-11 rounded-lg"
             width={48}
             height={48}
@@ -49,14 +64,14 @@ const Token = ({
         ) : (
           <div className="h-11" />
         )}
-        <span className="font-bold">{data?.symbol}</span>
+        <span className="font-bold">{symbol}</span>
       </div>
       <h4 className="text-left text-xs font-medium whitespace-nowrap w-fit min-w-32">{`${formatUnits(
         (balance as bigint) ?? 0,
-        data?.decimals ?? 0
+        decimals ?? 0
       ).slice(0, 10)}`}</h4>
       <h3 className="text-left text-xl font-bold whitespace-nowrap w-fit min-w-32">
-        {`$${usdPrice}`}
+        {`$${(usdPrice * weightedBalance) / (decimals ?? 1)}`.slice(0, 10)}
       </h3>
     </div>
   );
