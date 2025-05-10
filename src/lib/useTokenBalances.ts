@@ -56,15 +56,28 @@ export const useTokenBalances = () => {
     enabled: !!tokenAddresses?.length,
   });
 
-  return useMemo(
-    () =>
-      tokenAddresses?.map((tokenAddress, tokenIndex) => ({
+  return useMemo(() => {
+    const totalUsd = tokenAddresses?.reduce((acc, tokenAddress, tokenIndex) => {
+      const balance = tokenBalances?.[tokenIndex].result;
+      const coin = coins?.[`ethereum:${tokenAddress}`];
+      if (!coin || !balance) {
+        return acc;
+      }
+
+      const weightedBalance = Number(balance) / 10 ** coin.decimals;
+
+      return acc + weightedBalance * coin.price;
+    }, 0);
+
+    return {
+      tokens: tokenAddresses?.map((tokenAddress, tokenIndex) => ({
         tokenAddress,
         balance: tokenBalances?.[tokenIndex].result,
         coin: coins?.[`ethereum:${tokenAddress}`],
       })),
-    [coins, tokenAddresses, tokenBalances]
-  );
+      totalUsd,
+    };
+  }, [coins, tokenAddresses, tokenBalances]);
 };
 
 type DeFiLlamaTokenPriceResponse = {

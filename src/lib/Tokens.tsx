@@ -5,19 +5,24 @@ import { useTokenBalances } from "./useTokenBalances";
 import { useTokenMetadata } from "./useTokenMetadata";
 
 export const Tokens = () => {
-  const tokens = useTokenBalances();
+  const { tokens, totalUsd } = useTokenBalances();
 
   return (
-    <section className="flex flex-row gap-2 overflow-x-scroll no-scrollbar">
-      {tokens?.map(({ tokenAddress, balance, coin }) => (
-        <Token
-          key={tokenAddress as string}
-          tokenAddress={tokenAddress}
-          balance={balance}
-          usdPrice={coin?.price}
-        />
-      ))}
-    </section>
+    <>
+      <h2 className="text-2xl font-bold px-2 text-stone-50">
+        {`$${totalUsd}`.slice(0, 10)}
+      </h2>
+      <section className="flex flex-row gap-2 overflow-x-scroll no-scrollbar">
+        {tokens?.map(({ tokenAddress, balance, coin }) => (
+          <Token
+            key={tokenAddress as string}
+            tokenAddress={tokenAddress}
+            balance={balance}
+            usdPrice={coin?.price}
+          />
+        ))}
+      </section>
+    </>
   );
 };
 
@@ -62,7 +67,7 @@ const Token = ({
         decimals ?? 0
       ).slice(0, 10)}`}</h4>
       <h3 className="text-left text-xl font-bold whitespace-nowrap w-fit min-w-32">
-        {`$${(usdPrice * weightedBalance) / (decimals ?? 1)}`.slice(0, 10)}
+        {`$${usdPrice * weightedBalance}`.slice(0, 10)}
       </h3>
     </div>
   );
