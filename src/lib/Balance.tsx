@@ -1,4 +1,5 @@
 "use client";
+import type { Address } from "viem";
 import { Token } from "./Token";
 import { useTokenBalances } from "./useTokenBalances";
 
@@ -21,7 +22,7 @@ export const Balance = () => {
         {tokens?.map(({ tokenAddress, balance, coin }) => (
           <Token
             key={tokenAddress as string}
-            tokenAddress={tokenAddress}
+            tokenAddress={tokenAddress as Address}
             balance={balance}
             usdPrice={coin?.price}
           />

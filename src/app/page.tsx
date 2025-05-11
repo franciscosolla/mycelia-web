@@ -13,7 +13,7 @@ export default function Home() {
         </h1>
         <Account />
       </header>
-      <main className="flex flex-col flex-1">
+      <main className="flex flex-col flex-1 pt-4 px-2">
         <Balance />
         <div className="flex-1" />
         <ConnectWallet />

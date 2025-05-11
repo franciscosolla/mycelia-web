@@ -13,41 +13,60 @@ export function Account() {
 
   const [tooltip, setTooltip] = useState("Copy");
 
+  const [isOpen, setOpen] = useState(false);
+
   if (!isConnected || !address) {
     return null;
   }
 
   return (
-    <div className="group absolute right-2 top-2 flex flex-col gap-1 bg-stone-50 p-2 rounded-md items-end">
+    <button
+      className="group absolute right-2 top-2 flex flex-col gap-1 bg-stone-50 p-2 rounded-md items-end"
+      onClick={() => setOpen((value) => !value)}
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
       <button
         className="group/address text-xs text-stone-950 relative"
-        onClick={() =>
-          navigator.clipboard.writeText(address).then(() => {
-            setTooltip("Copied!");
-            setTimeout(() => setTooltip("Copy"), 2000);
-          })
-        }
+        onClick={(e) => {
+          if (isOpen) {
+            e.stopPropagation();
+
+            navigator.clipboard.writeText(address).then(() => {
+              setTooltip("Copied!");
+              setTimeout(() => setTooltip("Copy"), 2000);
+            });
+          }
+        }}
       >
         {minifiedAddress}
-        <span className="hidden group-hover/address:block group-hover/address:opacity-90 opacity-0 absolute right-full -top-0.5 bg-stone-500 py-1 px-1.5 text-[10px] mr-1 rounded-sm text-stone-50 font-bold">
+        <span
+          className={`hidden group-hover/address:block group-hover/address:opacity-90 opacity-0 absolute right-full -top-0.5 bg-stone-500 py-1 px-1.5 text-[10px] mr-1 rounded-sm text-stone-50 font-bold`}
+        >
           {tooltip}
         </span>
       </button>
 
       {chain ? (
-        <span className="hidden group-hover:block text-xs text-stone-950">
+        <span
+          className={`${
+            isOpen ? "block" : "hidden"
+          } group-hover:block text-xs text-stone-950`}
+        >
           {chain?.name}
         </span>
       ) : null}
 
       <button
-        className="hidden group-hover:block text-xs text-red-400 weight-bold"
+        className={`${
+          isOpen ? "block" : "hidden"
+        } group-hover:block text-xs text-red-400 weight-bold`}
         onClick={() => {
           disconnect();
         }}
       >
         Disconnect
       </button>
-    </div>
+    </button>
   );
 }
