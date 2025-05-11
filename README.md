@@ -64,7 +64,7 @@ npm install
 ### 2. Create `.env.local` file
 
 ```
-NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=your-reown-cloud-project-id
+NEXT_PUBLIC_REOWN_PROJECT_ID=your-reown-cloud-project-id
 NEXT_PUBLIC_ALCHEMY_API_KEY=your-alchemy-api-key
 ```
 
