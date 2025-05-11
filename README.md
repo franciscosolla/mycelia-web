@@ -18,10 +18,27 @@ It’s a space where I experiment with blockchain concepts, wallet connections, 
 - **Wallet Connections:**
   - Injected wallets (MetaMask, Brave, etc.)
   - WalletConnect v2 (mobile wallets like Rainbow, Trust, MetaMask Mobile)
+- **Data Sources:**
+  - **[Alchemy](https://www.alchemy.com/):** to fetch which tokens a wallet currently holds and get token metadata.
+  - **[DeFiLlama](https://defillama.com/):** to fetch current token prices in USD.
+  - **[TrustWallet Token Assets](https://github.com/trustwallet/assets):** used for fallback token logos.
+- **Request & Cache Management:** [React Query](https://tanstack.com/query) handles all remote request state and caching.
+- **Token Balance Syncing:** [wagmi](https://wagmi.sh/) `useReadContracts` and `useBalance` keep balances updated in real time.
 - **Blockchain Ecosystem (Phase 1):**
   - Ethereum Mainnet
 - **Hosting & Deployment:** [Vercel](https://vercel.com/)
 - **Version Control:** [GitHub](https://github.com/franciscosolla/mycelia)
+
+---
+
+## ✅ Current Capabilities
+
+- Connect wallet
+- Discover which tokens the connected wallet holds (via Alchemy)
+- Fetch metadata (name, symbol, decimals, logo) for each token (via Alchemy)
+- Read token balances live from the blockchain using wagmi + viem
+- Fetch token prices in USD (via DeFiLlama)
+- Display total wallet balance and per-token balances on Ethereum Mainnet
 
 ---
 
@@ -47,7 +64,8 @@ npm install
 ### 2. Create `.env.local` file
 
 ```
-NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=your-walletconnect-cloud-project-id
+NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=your-reown-cloud-project-id
+NEXT_PUBLIC_ALCHEMY_API_KEY=your-alchemy-api-key
 ```
 
 ### 3. Run the development server
@@ -81,6 +99,6 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to see the a
 
 ## ✨ About
 
-Created and maintained by [Francisco Solla](https://linkedin.com/in/francisco-solla).
+Created and maintained by [Francisco Solla](https://solla.dev).
 
 Mycelia is a continuous exploration into the principles of decentralization, user sovereignty, and the evolving decentralized web.
