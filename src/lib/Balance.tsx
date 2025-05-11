@@ -1,24 +1,32 @@
 "use client";
-import { useAccount, useBalance } from "wagmi";
+import { Token } from "./Token";
+import { useTokenBalances } from "./useTokenBalances";
 
 export const Balance = () => {
-  const { address } = useAccount();
-  const { data: balance } = useBalance({
-    address,
-  });
+  const { tokens, totalUsd } = useTokenBalances();
 
-  console.log({
-    address,
-    balance,
-  });
-
-  if (!balance) {
+  if (totalUsd === undefined || tokens === undefined) {
     return null;
   }
 
   return (
-    <h2 className="text-2xl font-bold px-2 text-stone-50">
-      {balance.formatted + balance.symbol}
-    </h2>
+    <section className="flex flex-col gap-4">
+      <header className="flex flex-col">
+        <h2 className="text-stone-50 text-sm">Total</h2>
+        <h3 className="text-2xl font-bold text-stone-50">
+          {`$${totalUsd}`.slice(0, 10)}
+        </h3>
+      </header>
+      <main className="flex flex-row gap-2 overflow-x-scroll no-scrollbar">
+        {tokens?.map(({ tokenAddress, balance, coin }) => (
+          <Token
+            key={tokenAddress as string}
+            tokenAddress={tokenAddress}
+            balance={balance}
+            usdPrice={coin?.price}
+          />
+        ))}
+      </main>
+    </section>
   );
 };

@@ -1,32 +1,9 @@
 "use client";
 import Image from "next/image";
 import { formatUnits, type Address } from "viem";
-import { useTokenBalances } from "./useTokenBalances";
 import { useTokenMetadata } from "./useTokenMetadata";
 
-export const Tokens = () => {
-  const { tokens, totalUsd } = useTokenBalances();
-
-  return (
-    <>
-      <h2 className="text-2xl font-bold px-2 text-stone-50">
-        {`$${totalUsd}`.slice(0, 10)}
-      </h2>
-      <section className="flex flex-row gap-2 overflow-x-scroll no-scrollbar">
-        {tokens?.map(({ tokenAddress, balance, coin }) => (
-          <Token
-            key={tokenAddress as string}
-            tokenAddress={tokenAddress}
-            balance={balance}
-            usdPrice={coin?.price}
-          />
-        ))}
-      </section>
-    </>
-  );
-};
-
-const Token = ({
+export const Token = ({
   tokenAddress,
   balance,
   usdPrice,
@@ -62,13 +39,13 @@ const Token = ({
         )}
         <span className="font-bold">{symbol}</span>
       </div>
-      <h4 className="text-left text-xs font-medium whitespace-nowrap w-fit min-w-32">{`${formatUnits(
+      <h5 className="text-left text-xs font-medium whitespace-nowrap w-fit min-w-32">{`${formatUnits(
         (balance as bigint) ?? 0,
         decimals ?? 0
-      ).slice(0, 10)}`}</h4>
-      <h3 className="text-left text-xl font-bold whitespace-nowrap w-fit min-w-32">
+      ).slice(0, 10)}`}</h5>
+      <h4 className="text-left text-xl font-bold whitespace-nowrap w-fit min-w-32">
         {`$${usdPrice * weightedBalance}`.slice(0, 10)}
-      </h3>
+      </h4>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { Account } from "@/lib/Account";
+import { Balance } from "@/lib/Balance";
 import { ConnectWallet } from "@/lib/ConnectWallet";
-import { Tokens } from "@/lib/Tokens";
 import Image from "next/image";
 
 export default function Home() {
@@ -14,7 +14,7 @@ export default function Home() {
         <Account />
       </header>
       <main className="flex flex-col flex-1">
-        <Tokens />
+        <Balance />
         <div className="flex-1" />
         <ConnectWallet />
       </main>
