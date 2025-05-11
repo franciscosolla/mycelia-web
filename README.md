@@ -42,28 +42,20 @@ It’s a space where I experiment with blockchain concepts, wallet connections, 
 
 ---
 
-## 🧱 Folder Philosophy
+## 📁 Folder Structure
 
-To keep the project clean, scalable, and easy to maintain, Mycelia uses a modular folder structure:
+To keep things focused and flexible in early development, Mycelia currently uses a simplified structure:
 
 ```
 src/
-├── app/                # Next.js App Router (routes + layout)
-├── components/         # Reusable components, UI-focused
-├── features/           # Grouped logic by domain (wallet, tokens, etc.)
-│   ├── wallet/         # Wagmi setup, wallet connection logic
-│   ├── tokens/         # Balance, metadata, price logic for tokens
-│   └── hooks/          # Global generic reusable hooks
-├── lib/                # External service clients (e.g., Alchemy)
-├── types/              # Type declarations and extensions
-public/                 # Static assets (logos, favicons)
+├── app/              # Next.js App Router (routes + layout)
+├── components/       # All shared and page-level UI components
+├── hooks/            # Custom reusable React hooks
+├── lib/              # External service clients and utilities (e.g., Alchemy)
+public/               # Static assets (icons, favicons, images)
 ```
 
-This encourages:
-
-- Clear separation of concerns
-- Better testability and reuse
-- Scalability across future chains and feature sets
+This allows quick iteration and low overhead. More structure can be introduced as the app evolves.
 
 ---
 
