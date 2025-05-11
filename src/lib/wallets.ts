@@ -86,10 +86,10 @@ const safe = {
 };
 
 export const WALLETS: Wallet[] = [
+  walletConnect,
   phantom,
   metamask,
   coinbase,
-  walletConnect,
   safe,
 ];
 
