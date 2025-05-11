@@ -1,7 +1,7 @@
 "use client";
+import { useTokenBalances } from "@/features/tokens/useTokenBalances";
 import type { Address } from "viem";
 import { Token } from "./Token";
-import { useTokenBalances } from "./useTokenBalances";
 
 export const Balance = () => {
   const { tokens, totalUsd } = useTokenBalances();

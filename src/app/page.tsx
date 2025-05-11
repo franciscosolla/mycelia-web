@@ -1,6 +1,6 @@
-import { Account } from "@/lib/Account";
-import { Balance } from "@/lib/Balance";
-import { ConnectWallet } from "@/lib/ConnectWallet";
+import { Account } from "@/components/Account";
+import { Balance } from "@/components/Balance";
+import { ConnectWallet } from "@/components/ConnectWallet";
 import Image from "next/image";
 
 export default function Home() {

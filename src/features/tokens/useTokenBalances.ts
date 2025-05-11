@@ -1,9 +1,9 @@
 "use client";
+import { alchemy } from "@/lib/alchemy";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { erc20Abi, type Address } from "viem";
 import { useAccount, useBalance, useReadContracts } from "wagmi";
-import { alchemy } from "./alchemy";
 
 export const useTokenBalances = () => {
   const { address } = useAccount();

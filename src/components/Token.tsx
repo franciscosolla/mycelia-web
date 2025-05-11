@@ -1,7 +1,7 @@
 "use client";
+import { useTokenMetadata } from "@/features/tokens/useTokenMetadata";
 import Image from "next/image";
 import { formatUnits, type Address } from "viem";
-import { useTokenMetadata } from "./useTokenMetadata";
 
 export const Token = ({
   tokenAddress,

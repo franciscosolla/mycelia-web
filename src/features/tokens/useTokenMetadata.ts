@@ -1,7 +1,7 @@
 "use client";
+import { alchemy } from "@/lib/alchemy";
 import { useQuery } from "@tanstack/react-query";
 import type { Address } from "viem";
-import { alchemy } from "./alchemy";
 
 export const useTokenMetadata = (tokenAddress: Address) =>
   useQuery({

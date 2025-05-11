@@ -1,4 +1,4 @@
-import { isMobile, isMobileAppAccesible, isServer } from "./devices";
+import { isMobile, isMobileAppAccesible, isServer } from "@/lib/devices";
 
 export type Wallet = {
   name: string;
