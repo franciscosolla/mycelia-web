@@ -48,6 +48,7 @@ const metamask = {
 
 const coinbase = {
   name: "Coinbase",
+  icon: "/coinbase-logo.svg",
   connectorIds: ["coinbaseWalletSDK"],
   desktop: {
     get installed() {
@@ -62,6 +63,7 @@ const coinbase = {
 
 const walletConnect = {
   name: "WalletConnect",
+  icon: "/wallet-connect-logo.svg",
   connectorIds: ["walletConnect"],
   desktop: {
     installed: false,
@@ -73,6 +75,7 @@ const walletConnect = {
 
 const safe = {
   name: "Safe",
+  icon: "/safe-logo.svg",
   connectorIds: ["safe"],
   desktop: {
     installed: false,
