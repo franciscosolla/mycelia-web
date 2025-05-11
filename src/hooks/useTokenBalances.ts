@@ -1,26 +1,15 @@
 "use client";
-import { alchemy } from "@/lib/alchemy";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { erc20Abi, type Address } from "viem";
 import { useAccount, useBalance, useReadContracts } from "wagmi";
+import { useTokenAddresses } from "./useTokenAddresses";
 
 export const useTokenBalances = () => {
   const { address } = useAccount();
   const { data: ethBalance } = useBalance({ address });
 
-  const { data: tokenAddresses } = useQuery({
-    queryKey: ["tokenBalances", address],
-    queryFn: () =>
-      alchemy.core
-        .getTokenBalances(address!)
-        .then((result) =>
-          result.tokenBalances.map((token) => token.contractAddress as Address)
-        ),
-    enabled: !!address,
-    staleTime: Infinity,
-    gcTime: Infinity,
-  });
+  const { data: tokenAddresses } = useTokenAddresses();
 
   const { data: tokenBalances } = useReadContracts({
     contracts: tokenAddresses?.map((tokenAddress) => ({
