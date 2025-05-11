@@ -72,10 +72,6 @@ const WalletOption = ({
 }) => {
   const isInstalled = isWalletInstalled(wallet);
 
-  console.log({
-    name: wallet.name,
-  });
-
   return (
     <li>
       <button
