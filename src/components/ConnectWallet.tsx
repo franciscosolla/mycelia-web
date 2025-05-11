@@ -1,9 +1,5 @@
 "use client";
-import {
-  isWalletInstalled,
-  WALLETS,
-  type Wallet,
-} from "@/features/wallet/wallets";
+import { isWalletInstalled, WALLETS, type Wallet } from "@/lib/wallets";
 import Image from "next/image";
 import { useMemo } from "react";
 import { useAccount, useConnect, type Connector } from "wagmi";

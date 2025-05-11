@@ -1,5 +1,5 @@
 "use client";
-import { useTokenBalances } from "@/features/tokens/useTokenBalances";
+import { useTokenBalances } from "@/hooks/useTokenBalances";
 import type { Address } from "viem";
 import { Token } from "./Token";
 

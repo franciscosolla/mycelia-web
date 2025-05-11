@@ -1,5 +1,5 @@
 "use client";
-import { useTokenMetadata } from "@/features/tokens/useTokenMetadata";
+import { useTokenMetadata } from "@/hooks/useTokenMetadata";
 import Image from "next/image";
 import { formatUnits, type Address } from "viem";
 
