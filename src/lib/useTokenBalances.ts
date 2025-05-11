@@ -2,11 +2,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { erc20Abi, type Address } from "viem";
-import { useAccount, useReadContracts } from "wagmi";
+import { useAccount, useBalance, useReadContracts } from "wagmi";
 import { alchemy } from "./alchemy";
 
 export const useTokenBalances = () => {
   const { address } = useAccount();
+  const { data: ethBalance } = useBalance({ address });
 
   const { data: tokenAddresses } = useQuery({
     queryKey: ["tokenBalances", address],
@@ -35,11 +36,26 @@ export const useTokenBalances = () => {
     },
   });
 
+  const balances = useMemo(
+    () => [
+      ethBalance?.value,
+      ...(tokenBalances ? tokenBalances.map(({ result }) => result) : []),
+    ],
+    [ethBalance, tokenBalances]
+  );
+  const addresses = useMemo(
+    () => [
+      "0x0000000000000000000000000000000000000000",
+      ...(tokenAddresses ? tokenAddresses : []),
+    ],
+    [tokenAddresses]
+  );
+
   const { data: coins } = useQuery({
     queryKey: ["tokenUsdPrice", address],
     queryFn: () =>
       fetch(
-        `https://coins.llama.fi/prices/current/ethereum:${tokenAddresses?.join(
+        `https://coins.llama.fi/prices/current/ethereum:${addresses?.join(
           ",ethereum:"
         )}`,
         {
@@ -57,8 +73,8 @@ export const useTokenBalances = () => {
   });
 
   return useMemo(() => {
-    const totalUsd = tokenAddresses?.reduce((acc, tokenAddress, tokenIndex) => {
-      const balance = tokenBalances?.[tokenIndex].result;
+    const totalUsd = addresses?.reduce((acc, tokenAddress, tokenIndex) => {
+      const balance = balances?.[tokenIndex];
       const coin = coins?.[`ethereum:${tokenAddress}`];
       if (!coin || !balance) {
         return acc;
@@ -70,14 +86,14 @@ export const useTokenBalances = () => {
     }, 0);
 
     return {
-      tokens: tokenAddresses?.map((tokenAddress, tokenIndex) => ({
+      tokens: addresses?.map((tokenAddress, tokenIndex) => ({
         tokenAddress,
-        balance: tokenBalances?.[tokenIndex].result,
+        balance: balances?.[tokenIndex],
         coin: coins?.[`ethereum:${tokenAddress}`],
       })),
       totalUsd,
     };
-  }, [coins, tokenAddresses, tokenBalances]);
+  }, [coins, addresses, balances]);
 };
 
 type DeFiLlamaTokenPriceResponse = {

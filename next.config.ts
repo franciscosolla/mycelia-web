@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["static.alchemyapi.io"],
+    domains: ["static.alchemyapi.io", "raw.githubusercontent.com"],
   },
 };
 
