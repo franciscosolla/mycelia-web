@@ -15,6 +15,7 @@ export type Wallet = {
 
 const phantom = {
   name: "Phantom",
+  icon: "/phantom-logo.svg",
   connectorIds: ["app.phantom", "injected"],
   desktop: {
     get installed() {
