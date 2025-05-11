@@ -24,18 +24,8 @@ const WalletOptions = () => {
     [connectors]
   );
 
-  console.log({ connectors, connectorMap });
-
   const handleConnect = async (wallet: Wallet) => {
     const connector = connectorMap[wallet.connectorIds[0]];
-
-    console.log({
-      connectors,
-      connectorMap,
-      connector,
-      connectorIds: wallet.connectorIds,
-      id: wallet.connectorIds[0],
-    });
 
     await connector.getProvider();
 
