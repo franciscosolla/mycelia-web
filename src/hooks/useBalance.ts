@@ -52,11 +52,19 @@ export const useBalance = () => {
     }, 0);
 
     return {
-      tokens: addresses?.map((address) => ({
-        tokenAddress: address,
-        balance: balances[address],
-        coin: pricesData?.[`ethereum:${address}`],
-      })),
+      tokens: addresses
+        ?.map((address) => ({
+          tokenAddress: address,
+          balance: balances[address],
+          coin: pricesData?.[`ethereum:${address}`],
+          usd:
+            (pricesData?.[`ethereum:${address}`]?.price ?? 0) *
+            (balances[address] /
+              10 ** (pricesData?.[`ethereum:${address}`]?.decimals ?? 0)),
+        }))
+        .sort((a, b) => {
+          return b.usd - a.usd;
+        }),
       totalUsd,
     };
   }, [pricesData, addresses, balances]);
