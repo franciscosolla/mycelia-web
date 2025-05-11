@@ -1,10 +1,10 @@
 "use client";
-import { useTokenBalances } from "@/hooks/useTokenBalances";
+import { useBalance } from "@/hooks/useBalance";
 import type { Address } from "viem";
 import { Token } from "./Token";
 
 export const Balance = () => {
-  const { tokens, totalUsd } = useTokenBalances();
+  const { tokens, totalUsd } = useBalance();
 
   if (totalUsd === undefined || tokens === undefined) {
     return null;
