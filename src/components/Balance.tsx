@@ -1,12 +1,14 @@
 "use client";
 import { useBalance } from "@/hooks/useBalance";
 import type { Address } from "viem";
+import { useAccount } from "wagmi";
 import { Token } from "./Token";
 
 export const Balance = () => {
+  const { isConnected } = useAccount();
   const { tokens, totalUsd } = useBalance();
 
-  if (totalUsd === undefined || tokens === undefined) {
+  if (!isConnected || totalUsd === undefined || tokens === undefined) {
     return null;
   }
 
