@@ -1,3 +1,4 @@
+import { AccountProvider } from "@/hooks/useAccount";
 import { QueryClientProvider } from "@/lib/QueryClientProvider";
 import { WagmiProvider } from "@/lib/WagmiProvider";
 import type { Metadata } from "next";
@@ -77,25 +78,27 @@ export default function RootLayout({
   return (
     <WagmiProvider>
       <QueryClientProvider>
-        <html lang="en">
-          <Head>
-            <link
-              rel="icon"
-              href="/favicon-dark.ico"
-              media="(prefers-color-scheme: dark)"
-            />
-            <link
-              rel="icon"
-              href="/favicon-light.ico"
-              media="(prefers-color-scheme: light)"
-            />
-          </Head>
-          <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen flex flex-col overflow-hidden bg-stone-950 relative`}
-          >
-            {children}
-          </body>
-        </html>
+        <AccountProvider>
+          <html lang="en">
+            <Head>
+              <link
+                rel="icon"
+                href="/favicon-dark.ico"
+                media="(prefers-color-scheme: dark)"
+              />
+              <link
+                rel="icon"
+                href="/favicon-light.ico"
+                media="(prefers-color-scheme: light)"
+              />
+            </Head>
+            <body
+              className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen flex flex-col overflow-hidden bg-stone-950 relative`}
+            >
+              {children}
+            </body>
+          </html>
+        </AccountProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );

@@ -7,6 +7,7 @@ import {
 
 export type Modal = {
   open: () => void;
+  close: () => void;
 };
 
 export const Modal = ({
@@ -17,6 +18,7 @@ export const Modal = ({
 
   useImperativeHandle(ref, () => ({
     open: () => dialogRef.current?.showModal(),
+    close: () => dialogRef.current?.close(),
   }));
 
   return (
@@ -29,7 +31,7 @@ export const Modal = ({
         }
       }}
     >
-      <div className="bg-stone-800 p-4 rounded-lg text-stone-50">
+      <div className="bg-stone-800 p-4 rounded-lg text-stone-50 relative">
         {children}
       </div>
     </dialog>

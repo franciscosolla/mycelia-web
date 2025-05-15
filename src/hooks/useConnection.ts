@@ -5,7 +5,7 @@ import { useCallback, useState } from "react";
 import type { Address } from "viem";
 import { ethereumWalletState, useEthereumWallet } from "./useEthereumWallet";
 
-export const useAccount = () => {
+export const useAccount2 = () => {
   const [error, setError] = useState<Error | null>(null);
 
   const ethereumWallet = useEthereumWallet();
