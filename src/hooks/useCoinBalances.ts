@@ -31,11 +31,12 @@ import { useTokenBalances } from "./useTokenBalances";
  * console.log(balances["0xA0b8..."]);            // USDC balance
  * console.log(Object.keys(balances).length);     // Number of non-zero coins
  */
-export const useCoinBalances = () => {
-  const { data: ethBalance, ...ethBalanceQueryState } = useEthereumBalance();
+export const useCoinBalances = (address: Address | undefined) => {
+  const { data: ethBalance, ...ethBalanceQueryState } =
+    useEthereumBalance(address);
 
   const { data: tokenBalances, ...tokenBalancesQueryState } =
-    useTokenBalances();
+    useTokenBalances(address);
 
   const data: Record<Address, number> = useMemo(() => {
     let balances: Record<Address, number> = {};

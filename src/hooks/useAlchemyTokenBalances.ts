@@ -1,6 +1,6 @@
 import { getAlchemyTokenBalances } from "@/lib/getAlchemyTokenBalances";
 import { useQuery } from "@tanstack/react-query";
-import { useAccount } from "wagmi";
+import type { Address } from "viem";
 
 /**
  * React hook to fetch all ERC-20 token balances for the connected wallet using Alchemy.
@@ -21,10 +21,8 @@ import { useAccount } from "wagmi";
  *   console.log(balances[0].contractAddress, balances[0].tokenBalance);
  * }
  */
-export const useAlchemyTokenBalances = () => {
-  const { address: walletAddress } = useAccount();
-
-  return useQuery({
+export const useAlchemyTokenBalances = (walletAddress: Address | undefined) =>
+  useQuery({
     queryKey: ["alchemy", "getTokenBalances", walletAddress],
     queryFn: () => {
       if (!walletAddress) {
@@ -37,4 +35,3 @@ export const useAlchemyTokenBalances = () => {
     staleTime: Infinity,
     gcTime: Infinity,
   });
-};

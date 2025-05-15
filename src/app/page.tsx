@@ -7,7 +7,7 @@ export default function Home() {
     <>
       <Header />
       <main className="flex flex-col flex-1 pt-4 px-2">
-        <Balance />
+        <Balance account={{}} />
         <div className="flex-1" />
         <ConnectWallet />
       </main>

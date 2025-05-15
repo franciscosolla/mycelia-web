@@ -1,14 +1,19 @@
 "use client";
+import type { Account } from "@/hooks/useAccount";
 import { useBalance } from "@/hooks/useBalance";
 import type { Address } from "viem";
 import { useAccount } from "wagmi";
 import { Token } from "./Token";
 
-export const Balance = () => {
-  const { isConnected } = useAccount();
-  const { tokens, totalUsd } = useBalance();
+export const Balance = ({ account }: { account: Account }) => {
+  const { isConnected, address } = useAccount();
+  const { tokens, totalUsd } = useBalance(account.ethereum ?? address);
 
-  if (!isConnected || totalUsd === undefined || tokens === undefined) {
+  if (
+    (!account.ethereum && !isConnected) ||
+    totalUsd === undefined ||
+    tokens === undefined
+  ) {
     return null;
   }
 

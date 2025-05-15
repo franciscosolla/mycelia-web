@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import type { Address } from "viem";
 import { useAlchemyTokenBalances } from "./useAlchemyTokenBalances";
 
 /**
@@ -20,8 +21,9 @@ import { useAlchemyTokenBalances } from "./useAlchemyTokenBalances";
  * const { data: tokenAddresses } = useTokenAddresses();
  * // tokenAddresses = ["0xA0b8...", "0xC02a..."]
  */
-export const useTokenAddresses = () => {
-  const { data: tokenBalances, ...state } = useAlchemyTokenBalances();
+export const useTokenAddresses = (walletAddress: Address | undefined) => {
+  const { data: tokenBalances, ...state } =
+    useAlchemyTokenBalances(walletAddress);
 
   const tokenAddresses = useMemo(
     () =>

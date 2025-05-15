@@ -1,4 +1,5 @@
-import { useAccount, useBalance } from "wagmi";
+import type { Address } from "viem";
+import { useBalance } from "wagmi";
 
 /**
  * React hook to fetch the native Ethereum (ETH) balance for the connected wallet.
@@ -15,5 +16,5 @@ import { useAccount, useBalance } from "wagmi";
  * const { data: eth, isLoading } = useEthereumBalance();
  * console.log(eth?.formatted); // e.g., "0.4281"
  */
-export const useEthereumBalance = () =>
-  useBalance({ address: useAccount().address });
+export const useEthereumBalance = (address: Address | undefined) =>
+  useBalance({ address });

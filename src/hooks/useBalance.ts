@@ -29,8 +29,8 @@ import { useDeFiLlamaPrices } from "./useDeFiLlamaPrices";
  * console.log(totalUsd); // e.g., 1423.57
  * console.log(tokens[0].coin.symbol, tokens[0].balance);
  */
-export const useBalance = () => {
-  const { data: balances } = useCoinBalances();
+export const useBalance = (address: Address | undefined) => {
+  const { data: balances } = useCoinBalances(address);
 
   const addresses = Object.keys(balances) as Address[];
 

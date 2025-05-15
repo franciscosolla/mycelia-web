@@ -2,7 +2,7 @@
 import { mergeQueryStates } from "@/lib/mergeQueyStates";
 import { useMemo } from "react";
 import { erc20Abi, type Address } from "viem";
-import { useAccount, useReadContracts } from "wagmi";
+import { useReadContracts } from "wagmi";
 import { useTokenAddresses } from "./useTokenAddresses";
 
 /**
@@ -23,10 +23,9 @@ import { useTokenAddresses } from "./useTokenAddresses";
  * const { data: balances, isLoading } = useTokenBalances();
  * console.log(balances?.['0x...']); // prints 4.52 or similar
  */
-export const useTokenBalances = () => {
-  const { address: walletAddress } = useAccount();
+export const useTokenBalances = (walletAddress: Address | undefined) => {
   const { data: tokenAddresses, ...tokenAddressesQueryState } =
-    useTokenAddresses();
+    useTokenAddresses(walletAddress);
 
   const contracts = tokenAddresses?.map((tokenAddress) => ({
     address: tokenAddress as Address,

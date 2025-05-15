@@ -14,7 +14,7 @@ import {
 } from "react";
 import type { Address } from "viem";
 
-type Account = {
+export type Account = {
   ethereum?: Address;
   solana?: string;
   bitcoin?: string;
@@ -104,11 +104,14 @@ export const useAccount = (index: number = 0) => {
 };
 
 export const useAddAccount = () => {
-  const { setAccounts } = useContext(AccountContext);
+  const { accounts, setAccounts } = useContext(AccountContext);
 
   const addAccount = useCallback(
-    (account: Account) => setAccounts((current) => [...current, account]),
-    [setAccounts]
+    (account: Account) => {
+      setAccounts((current) => [...current, account]);
+      return accounts.length;
+    },
+    [accounts.length, setAccounts]
   );
 
   return {

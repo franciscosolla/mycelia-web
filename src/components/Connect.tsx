@@ -3,6 +3,7 @@
 import { useAddAccount } from "@/hooks/useAccount";
 import { detectAddressNetwork } from "@/lib/detectAddressNetwork";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useRef, useState, type PropsWithChildren } from "react";
 import { Modal } from "./Modal";
 
@@ -57,13 +58,15 @@ const ExploreOption = () => {
     setNetwork(detectAddressNetwork(input));
   };
 
+  const router = useRouter();
+
   const handleConfirm = () => {
     if (network) {
-      addAccount({
+      const id = addAccount({
         [network]: address,
       });
 
-      modalRef.current?.close();
+      router.push(`/${id}`);
     }
   };
 
