@@ -2,23 +2,23 @@
 
 import type { Account } from "@/features/accounts/types";
 import { detectAddressNetwork } from "@/lib/detectAddressNetwork";
-import { useCallback, useContext } from "react";
-import { AccountsContext } from "./AccountsContext";
+import { useCallback } from "react";
+import { useAccounts } from "./useAccounts";
 
-export const useAccount = (index: number = 0) => {
-  const { accounts, setAccounts } = useContext(AccountsContext);
+export const useAccount = (accountId: number = 0) => {
+  const { accounts, setAccounts } = useAccounts();
 
-  const account = accounts[index];
+  const account = accounts[accountId] as Account | undefined;
 
   const setAccount = useCallback(
     (account: Account) => {
       setAccounts((current) => {
         const next = [...current];
-        next[index] = account;
+        next[accountId] = account;
         return next;
       });
     },
-    [index, setAccounts]
+    [accountId, setAccounts]
   );
 
   const setAddress = useCallback(
@@ -41,5 +41,6 @@ export const useAccount = (index: number = 0) => {
     account,
     setAccount,
     setAddress,
+    accountId,
   };
 };

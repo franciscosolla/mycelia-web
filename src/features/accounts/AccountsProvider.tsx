@@ -25,7 +25,7 @@ export const AccountsProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <AccountsContext.Provider value={value}>
-      {children}\
+      {children}
     </AccountsContext.Provider>
   );
 };

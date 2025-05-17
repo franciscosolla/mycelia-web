@@ -1,11 +1,11 @@
 "use client";
 
 import type { Account } from "@/features/accounts/types";
-import { useCallback, useContext } from "react";
-import { AccountsContext } from "./AccountsContext";
+import { useCallback } from "react";
+import { useAccounts } from "./useAccounts";
 
 export const useAddAccount = () => {
-  const { accounts, setAccounts } = useContext(AccountsContext);
+  const { accounts, setAccounts } = useAccounts();
 
   const addAccount = useCallback(
     (account: Account) => {

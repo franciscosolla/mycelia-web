@@ -89,9 +89,9 @@ const ExploreOption = () => {
           <h2 className="text-lg font-semibold text-stone-50">
             🔍 Explore a Wallet
           </h2>
-          <p className="text-stone-400 text-sm text-center w-full text-left mt-2 pl-1">
+          <p className="text-stone-400 text-sm w-full text-left mt-2 pl-1">
             Enter any wallet address to view tokens, NFTs, and transactions.
-            <span className="text-stone-400 text-xs text-center w-full block text-left mt-1">
+            <span className="text-stone-400 text-xs w-full block text-left mt-1">
               (You won't be able to sign or send.)
             </span>
           </p>
