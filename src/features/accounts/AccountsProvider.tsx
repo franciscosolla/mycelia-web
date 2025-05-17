@@ -7,20 +7,32 @@ import { getAccountsFromLocalStorage } from "./getAccountsFromLocalStorage";
 import { persistAccounts } from "./persistAccounts";
 
 export const AccountsProvider = ({ children }: PropsWithChildren) => {
-  const [accounts, setAccounts] = useState<Account[]>(
+  const [_accounts, setAccounts] = useState<Account[]>(
     getAccountsFromLocalStorage
   );
 
   useEffect(() => {
-    persistAccounts(accounts);
-  }, [accounts]);
+    persistAccounts(_accounts);
+  }, [_accounts]);
 
   const value = useMemo(
     () => ({
-      accounts,
+      accounts: _accounts.map((account) => ({
+        ...account,
+        get name() {
+          return account.name ?? `Account ${_accounts.indexOf(account)}`;
+        },
+        get symbol() {
+          return `${
+            account.name
+              ? account.name.toUpperCase()
+              : `A${_accounts.indexOf(account)}`
+          }`.slice(0, 2);
+        },
+      })),
       setAccounts,
     }),
-    [accounts]
+    [_accounts]
   );
 
   return (

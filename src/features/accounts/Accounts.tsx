@@ -41,12 +41,8 @@ export const Accounts = () => {
                 <MoveLeft />
               </button>
               <div>
-                {accounts.map((account, id) => (
-                  <AccountButton
-                    key={`${account.name ?? "account"}-${id}`}
-                    account={account}
-                    id={id}
-                  />
+                {accounts.map((account) => (
+                  <AccountButton key={account.name} account={account} />
                 ))}
               </div>
             </div>
