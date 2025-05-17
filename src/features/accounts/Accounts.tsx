@@ -8,7 +8,7 @@ import { AccountButton } from "./AccountButton";
 
 export const Accounts = () => {
   const { accounts } = useAccounts();
-  const { account, accountId } = useAccount();
+  const { account } = useAccount();
   const { removeAccount } = useRemoveAccount();
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -19,7 +19,7 @@ export const Accounts = () => {
   return (
     <>
       {account ? (
-        <AccountButton account={account} id={accountId} onClick={handleClick} />
+        <AccountButton account={account} onClick={handleClick} />
       ) : null}
       <dialog ref={dialogRef} className="bg-transparent">
         <div
