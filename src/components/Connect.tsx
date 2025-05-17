@@ -1,10 +1,15 @@
 "use client";
 
-import { useAddAccount } from "@/hooks/useAccount";
+import { useAddAccount } from "@/features/accounts/useAddAccount";
 import { detectAddressNetwork } from "@/lib/detectAddressNetwork";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useRef, useState, type PropsWithChildren } from "react";
+import {
+  useRef,
+  useState,
+  type FormEventHandler,
+  type PropsWithChildren,
+} from "react";
 import { Modal } from "./Modal";
 
 export const Connect = () => {
@@ -52,7 +57,7 @@ const ExploreOption = () => {
     useState<ReturnType<typeof detectAddressNetwork>>();
   const { addAccount } = useAddAccount();
 
-  const handleInput = (e) => {
+  const handleInput: FormEventHandler<HTMLInputElement> = (e) => {
     const input = e.currentTarget.value;
     setAddress(input);
     setNetwork(detectAddressNetwork(input));

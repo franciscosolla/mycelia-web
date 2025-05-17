@@ -1,4 +1,4 @@
-import { AccountProvider } from "@/hooks/useAccount";
+import { AccountsProvider } from "@/features/accounts/AccountsProvider";
 import { QueryClientProvider } from "@/lib/QueryClientProvider";
 import { WagmiProvider } from "@/lib/WagmiProvider";
 import type { Metadata } from "next";
@@ -78,7 +78,7 @@ export default function RootLayout({
   return (
     <WagmiProvider>
       <QueryClientProvider>
-        <AccountProvider>
+        <AccountsProvider>
           <html lang="en">
             <Head>
               <link
@@ -98,7 +98,7 @@ export default function RootLayout({
               {children}
             </body>
           </html>
-        </AccountProvider>
+        </AccountsProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );

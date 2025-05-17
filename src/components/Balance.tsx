@@ -1,5 +1,5 @@
 "use client";
-import type { Account } from "@/hooks/useAccount";
+import type { Account } from "@/features/accounts/types";
 import { useBalance } from "@/hooks/useBalance";
 import type { Address } from "viem";
 import { useAccount } from "wagmi";

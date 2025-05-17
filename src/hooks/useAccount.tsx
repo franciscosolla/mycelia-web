@@ -12,13 +12,7 @@ import {
   type PropsWithChildren,
   type SetStateAction,
 } from "react";
-import type { Address } from "viem";
-
-export type Account = {
-  ethereum?: Address;
-  solana?: string;
-  bitcoin?: string;
-};
+import type { Account } from "viem";
 
 const AccountContext = createContext<{
   accounts: Account[];
