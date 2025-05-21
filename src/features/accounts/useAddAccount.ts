@@ -5,14 +5,26 @@ import { useCallback } from "react";
 import { useAccounts } from "./useAccounts";
 
 export const useAddAccount = () => {
-  const { accounts, setAccounts } = useAccounts();
+  const { setAccounts } = useAccounts();
 
   const addAccount = useCallback(
-    (account: Account) => {
-      setAccounts((current) => [...current, account]);
-      return accounts.length;
+    (account: Omit<Account, "id">) => {
+      const id = `${Date.now()}`;
+
+      setAccounts((current) => {
+        const next = new Map(current);
+
+        next.set(id, {
+          ...account,
+          id,
+        });
+
+        return next;
+      });
+
+      return id;
     },
-    [accounts.length, setAccounts]
+    [setAccounts]
   );
 
   return {

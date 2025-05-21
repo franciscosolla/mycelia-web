@@ -1,10 +1,14 @@
-import type { Account } from "@/features/accounts/types";
+import type { Account, Wallet } from "@/features/accounts/types";
 import { createContext, type Dispatch, type SetStateAction } from "react";
 
 export const AccountsContext = createContext<{
-  accounts: Account[];
-  setAccounts: Dispatch<SetStateAction<Account[]>>;
+  accounts: Map<string, Account>;
+  setAccounts: Dispatch<SetStateAction<Map<string, Account>>>;
+  wallets: Map<Wallet["address"], Wallet>;
+  setWallets: Dispatch<SetStateAction<Map<Wallet["address"], Wallet>>>;
 }>({
-  accounts: [],
+  accounts: new Map(),
   setAccounts: () => {},
+  wallets: new Map(),
+  setWallets: () => {},
 });

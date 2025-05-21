@@ -1,4 +1,4 @@
-import { Connect } from "@/components/Connect";
+import { Connect } from "@/features/connect/Connect";
 
 export default function Beta() {
   return (

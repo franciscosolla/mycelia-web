@@ -5,16 +5,21 @@ import { detectAddressNetwork } from "@/lib/detectAddressNetwork";
 import { useCallback } from "react";
 import { useAccounts } from "./useAccounts";
 
-export const useAccount = (accountId: number = 0) => {
+export const useAccount = (accountId: string) => {
   const { accounts, setAccounts } = useAccounts();
 
-  const account = accounts[accountId] as Account | undefined;
+  const account = accounts.get(accountId);
 
   const setAccount = useCallback(
-    (account: Account) => {
+    (account: Account | ((current: Account | undefined) => Account)) => {
       setAccounts((current) => {
-        const next = [...current];
-        next[accountId] = account;
+        const next = new Map(current);
+        next.set(
+          accountId,
+          typeof account === "function"
+            ? account(next.get(accountId)!)
+            : account
+        );
         return next;
       });
     },
@@ -23,18 +28,24 @@ export const useAccount = (accountId: number = 0) => {
 
   const setAddress = useCallback(
     (address: string) => {
-      const network = detectAddressNetwork(address);
+      setAccount((current) => {
+        if (!current) {
+          throw new Error("Account not found");
+        }
 
-      if (network) {
-        return setAccount({
-          ...account,
+        const network = detectAddressNetwork(address);
+
+        if (!network) {
+          throw new Error("Network not detected");
+        }
+
+        return {
+          ...current,
           [network]: address,
-        });
-      }
-
-      throw new Error("Network not detected");
+        };
+      });
     },
-    [account, setAccount]
+    [setAccount]
   );
 
   return {

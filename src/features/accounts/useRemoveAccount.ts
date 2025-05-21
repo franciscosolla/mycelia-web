@@ -5,10 +5,12 @@ export const useRemoveAccount = () => {
   const { setAccounts } = useAccounts();
 
   const removeAccount = useCallback(
-    (id: number = 0) => {
+    (id: string) => {
       setAccounts((current) => {
-        const next = [...current];
-        next.splice(id, 1);
+        const next = new Map(current);
+
+        next.delete(`${id}`);
+
         return next;
       });
     },
