@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Modal } from "../../components/Modal";
+import { importFromSeedPhrase } from "../accounts/importFromSeedPhrase";
 import { Option } from "./Option";
 
 export const ImportOption = () => {
@@ -24,12 +25,43 @@ export const ImportOption = () => {
 };
 
 const ImportModal = () => {
+  const [phrase, setPhrase] = useState<string[]>(Array(12).fill(""));
+
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value;
+    const words = value.trimStart().split(" ");
+
+    let index = parseInt(e.currentTarget.id.split("-")[1], 10);
+    let word = words.shift()?.trim() || "";
+
+    setPhrase((prev) => {
+      const newPhrase = [...prev];
+      newPhrase[index] = word || "";
+
+      while (words.length && index < 11) {
+        index += 1;
+        word = words.shift()?.trim() || "";
+
+        newPhrase[index] = word || "";
+      }
+
+      const nextInput = document.getElementById(
+        `input-${index}`
+      ) as HTMLInputElement;
+
+      if (nextInput) {
+        nextInput.focus();
+      }
+
+      return newPhrase;
+    });
+  };
+
   return (
     <div>
-      <h2>Recovery Phrase</h2>
+      <h2>Seed Phrase</h2>
       <p className="mt-1">
-        Import wallets from an existing account with your 12-word recovery
-        phrase
+        Import wallets from an existing account with your 12-word seed phrase
       </p>
       <div className="grid grid-cols-3 gap-2 min-w-90 mt-4">
         {new Array(12).fill(null).map((_, index) => (
@@ -52,6 +84,7 @@ const ImportModal = () => {
                 id={`input-${index}`}
                 type="text"
                 className="w-max"
+                value={phrase[index] || ""}
                 onChange={handleInput}
                 onKeyDown={(e) => {
                   if (
@@ -71,32 +104,11 @@ const ImportModal = () => {
         ))}
       </div>
       <button
-        onClick={() => {}}
+        onClick={() => importFromSeedPhrase(phrase.join(" "))}
         className="mt-4 w-full p-2 bg-stone-600 text-stone-50 rounded-lg hover:bg-stone-500 transition-all duration-400"
       >
         Add account
       </button>
     </div>
   );
-};
-
-const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const value = e.currentTarget.value;
-  const words = value.trimStart().split(" ");
-
-  e.currentTarget.value = words.shift()?.trim() || "";
-
-  let nextIndex = parseInt(e.currentTarget.id.split("-")[1], 10) + 1;
-
-  while (words.length) {
-    const nextInput = document.getElementById(
-      `input-${nextIndex}`
-    ) as HTMLInputElement;
-
-    if (nextInput) {
-      nextInput.focus();
-      nextInput.value = words.shift()?.trim() ?? "";
-      nextIndex++;
-    }
-  }
 };
