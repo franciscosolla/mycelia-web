@@ -17,11 +17,13 @@ export const AccountButton = ({
         className="bg-stone-50 rounded-full p-4 aspect-square text-center flex flex-col items-center justify-center font-black"
         onClick={onClick}
       >
-        {account.symbol}
+        {account.symbol ?? `A${account.id.slice(-1)}`}
       </button>
       <div className="group-hover:block hidden absolute top-0 right-full pr-2 text-stone-50">
         <article className="flex flex-col gap-2 bg-stone-900 rounded-sm p-2 text-sm">
-          <h1 className="text-center font-bold">{account.name}</h1>
+          <h1 className="text-center font-bold">
+            {account.name ?? `Account ${account.id.slice(-1)}`}
+          </h1>
           <Network network="ethereum" address={account.ethereum} />
         </article>
       </div>

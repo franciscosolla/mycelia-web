@@ -12,7 +12,7 @@ export default function Page({
 }) {
   const router = useRouter();
   const { accountId } = use(params);
-  const { account } = useAccount(Number(accountId));
+  const { account } = useAccount(accountId);
 
   if (!account) {
     router.push("/beta");

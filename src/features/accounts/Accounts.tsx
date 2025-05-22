@@ -3,18 +3,26 @@ import { useAccount } from "@/features/accounts/useAccount";
 import { useAccounts } from "@/features/accounts/useAccounts";
 import { useRemoveAccount } from "@/features/accounts/useRemoveAccount";
 import { MoveLeft, Power } from "lucide-react";
+import { useParams } from "next/navigation";
 import { useRef } from "react";
 import { AccountButton } from "./AccountButton";
 
 export const Accounts = () => {
   const { accounts } = useAccounts();
-  const { account } = useAccount();
+  const accountId = useParams<{ accountId: string }>().accountId || "";
+  const { account } = useAccount(accountId);
   const { removeAccount } = useRemoveAccount();
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const handleClick = () => {
     dialogRef.current?.showModal();
   };
+
+  console.log({
+    accounts,
+    account,
+    accountId,
+  });
 
   return (
     <>
@@ -40,8 +48,8 @@ export const Accounts = () => {
               >
                 <MoveLeft />
               </button>
-              <div>
-                {accounts.map((account) => (
+              <div className="flex flex-col gap-2">
+                {[...accounts.values()].map((account) => (
                   <AccountButton key={account.name} account={account} />
                 ))}
               </div>
@@ -53,7 +61,7 @@ export const Accounts = () => {
                   dialogRef.current?.close();
                 }}
               >
-                <Power onClick={() => removeAccount()} />
+                <Power onClick={() => removeAccount(accountId)} />
               </button>
             </div>
           </div>
