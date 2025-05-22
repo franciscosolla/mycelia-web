@@ -18,25 +18,25 @@ export const useAccount2 = () => {
     // Subscribe for pairing URI
     provider.on("display_uri", setProviderUri);
 
-    // Subscribe to session ping
-    provider.on("session_ping", ({ id, topic }) => {
-      console.log("session_ping", id, topic);
-    });
+    // // Subscribe to session ping
+    // provider.on("session_ping", ({ id, topic }) => {
+    //   console.log("session_ping", id, topic);
+    // });
 
-    // Subscribe to session event
-    provider.on("session_event", ({ event, chainId }) => {
-      console.log("session_event", event, chainId);
-    });
+    // // Subscribe to session event
+    // provider.on("session_event", ({ event, chainId }) => {
+    //   console.log("session_event", event, chainId);
+    // });
 
-    // Subscribe to session update
-    provider.on("session_update", ({ topic, params }) => {
-      console.log("session_update", topic, params);
-    });
+    // // Subscribe to session update
+    // provider.on("session_update", ({ topic, params }) => {
+    //   console.log("session_update", topic, params);
+    // });
 
-    // Subscribe to session delete
-    provider.on("session_delete", ({ id, topic }) => {
-      console.log("session_delete", id, topic);
-    });
+    // // Subscribe to session delete
+    // provider.on("session_delete", ({ id, topic }) => {
+    //   console.log("session_delete", id, topic);
+    // });
 
     provider.connect(providerOptions).then((session) => {
       if (session) {
