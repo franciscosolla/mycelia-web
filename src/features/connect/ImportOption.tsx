@@ -1,8 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { Modal } from "../../components/Modal";
-import { importFromSeedPhrase } from "../accounts/importFromSeedPhrase";
+import { addAccount } from "../accounts/addAccount";
+import { getAccountFromMnemonic } from "../accounts/getAccountFromMnemonic";
 import { Option } from "./Option";
 
 export const ImportOption = () => {
@@ -25,6 +27,7 @@ export const ImportOption = () => {
 };
 
 const ImportModal = () => {
+  const router = useRouter();
   const [phrase, setPhrase] = useState<string[]>(Array(12).fill(""));
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -104,7 +107,16 @@ const ImportModal = () => {
         ))}
       </div>
       <button
-        onClick={() => importFromSeedPhrase(phrase.join(" "))}
+        onClick={() => {
+          const mnemonic = phrase.join(" ").trim();
+          console.log({
+            mnemonic,
+            phrase,
+          });
+          const accounts = addAccount(getAccountFromMnemonic(mnemonic));
+          console.log({ accounts });
+          router.push(`/account/${accounts.length - 1}`);
+        }}
         className="mt-4 w-full p-2 bg-stone-600 text-stone-50 rounded-lg hover:bg-stone-500 transition-all duration-400"
       >
         Add account

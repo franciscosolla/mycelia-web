@@ -1,19 +1,20 @@
 "use client";
 
-import { useAddAccount } from "@/features/accounts/useAddAccount";
 import { detectAddressNetwork } from "@/lib/detectAddressNetwork";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useRef, useState, type FormEventHandler } from "react";
 import { Modal } from "../../components/Modal";
+import { addWallet } from "../wallet/addWallet";
 import { Option } from "./Option";
 
 export const ExploreOption = () => {
   const modalRef = useRef<Modal>(null);
+
   const [address, setAddress] = useState<string>();
+
   const [network, setNetwork] =
     useState<ReturnType<typeof detectAddressNetwork>>();
-  const { addAccount } = useAddAccount();
 
   const handleInput: FormEventHandler<HTMLInputElement> = (e) => {
     const input = e.currentTarget.value;
@@ -24,12 +25,12 @@ export const ExploreOption = () => {
   const router = useRouter();
 
   const handleConfirm = () => {
-    if (network) {
-      const id = addAccount({
-        [network]: address,
+    if (network && address) {
+      addWallet({
+        address,
       });
 
-      router.push(`/${id}`);
+      router.push(`/wallet/${address}`);
     }
   };
 
