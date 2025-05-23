@@ -1,5 +1,5 @@
 "use client";
-import { Balance } from "@/components/Balance";
+import { EthereumBalance } from "@/components/EthereumBalance";
 import { Accounts } from "@/features/accounts/Accounts";
 import { useAccount } from "@/features/accounts/useAccount";
 import { useRouter } from "next/navigation";
@@ -25,7 +25,7 @@ export default function Page({
       </header>
 
       <main className="flex flex-col flex-1 pt-4 px-2">
-        {account ? <Balance account={account} /> : null}
+        {account ? <EthereumBalance address={account.ethereum} /> : null}
       </main>
     </>
   );
