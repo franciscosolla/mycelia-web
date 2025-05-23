@@ -1,5 +1,6 @@
-import type { Account, Wallet } from "@/features/accounts/types";
+import type { Account } from "@/features/accounts/types";
 import { createContext, type Dispatch, type SetStateAction } from "react";
+import type { Wallet } from "../wallet/types";
 
 export const AccountsContext = createContext<{
   accounts: Map<string, Account>;

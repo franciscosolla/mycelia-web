@@ -1,4 +1,5 @@
-import type { Account, Wallet } from "./types";
+import type { Wallet } from "../wallet/types";
+import type { Account } from "./types";
 
 const persist = <Value>(key: string, value: Value) =>
   window?.localStorage.setItem(key, JSON.stringify(value));

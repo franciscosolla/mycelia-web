@@ -16,7 +16,6 @@ export const useAddAccount = () => {
 
         next.set(id, {
           ...account,
-          id,
         });
 
         return next;

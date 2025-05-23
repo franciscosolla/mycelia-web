@@ -1,7 +1,8 @@
 "use client";
 
-import type { Account, Wallet } from "@/features/accounts/types";
+import type { Account } from "@/features/accounts/types";
 import { useEffect, useMemo, useState, type PropsWithChildren } from "react";
+import type { Wallet } from "../wallet/types";
 import { AccountsContext } from "./AccountsContext";
 import {
   getAccountsFromLocalStorage,
