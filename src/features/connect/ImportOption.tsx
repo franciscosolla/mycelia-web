@@ -109,12 +109,7 @@ const ImportModal = () => {
       <button
         onClick={() => {
           const mnemonic = phrase.join(" ").trim();
-          console.log({
-            mnemonic,
-            phrase,
-          });
           const accounts = addAccount(getAccountFromMnemonic(mnemonic));
-          console.log({ accounts });
           router.push(`/account/${accounts.length - 1}`);
         }}
         className="mt-4 w-full p-2 bg-stone-600 text-stone-50 rounded-lg hover:bg-stone-500 transition-all duration-400"

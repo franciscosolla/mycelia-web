@@ -1,7 +1,7 @@
 "use client";
 import { EthereumBalance } from "@/components/EthereumBalance";
 import { Accounts } from "@/features/accounts/Accounts";
-import { GlobalState } from "@/lib/GlobalState";
+import { getEthereumAddress } from "@/features/accounts/getEthereumAddress";
 import { use } from "react";
 import type { Address } from "viem";
 
@@ -11,7 +11,7 @@ export default function Page({
   params: Promise<{ index: string }>;
 }) {
   const { index } = use(params);
-  const ethereumAddress = GlobalState.get(`account.[${index}].ethereum`);
+  const ethereumAddress = getEthereumAddress(index);
 
   return (
     <>

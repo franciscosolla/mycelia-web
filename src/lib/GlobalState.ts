@@ -25,6 +25,18 @@ export class GlobalState {
     Set<(value: StoreValue<StorePath>) => void>
   > = new Map();
 
+  private static persist() {
+    const serializedStore = JSON.stringify(this.store);
+    localStorage.setItem("store", serializedStore);
+  }
+
+  static hydrate() {
+    const serializedStore = localStorage.getItem("store");
+    if (serializedStore) {
+      this.store = JSON.parse(serializedStore);
+    }
+  }
+
   static set<Path extends StorePath>(
     path: Path,
     value:
@@ -41,6 +53,7 @@ export class GlobalState {
     set(this.store, path, value);
 
     GlobalState.callListeners(path);
+    GlobalState.persist();
 
     return value;
   }
@@ -50,7 +63,9 @@ export class GlobalState {
   }
 
   static clear(path: StorePath) {
-    return unset(this.store, path);
+    const result = unset(this.store, path);
+    GlobalState.persist();
+    return result;
   }
 
   static listen<Path extends StorePath>(
@@ -91,3 +106,5 @@ export class GlobalState {
     });
   }
 }
+
+GlobalState.hydrate();

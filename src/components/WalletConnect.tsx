@@ -4,13 +4,6 @@ export const WalletConnect = () => {
   // const { wallet, isConnected, isConnecting, connect, error, providerUri } =
   //   useAccount();
 
-  // console.log({
-  //   wallet,
-  //   isConnected,
-  //   isConnecting,
-  //   error,
-  // });
-
   // if (providerUri) {
   //   return (
   //     <div className="bg-white p-4 absolute top-1/2">

@@ -18,12 +18,6 @@ export const Accounts = () => {
     dialogRef.current?.showModal();
   };
 
-  console.log({
-    accounts,
-    account,
-    accountId,
-  });
-
   return (
     <>
       {account ? (
