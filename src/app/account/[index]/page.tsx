@@ -1,7 +1,7 @@
 "use client";
 import { EthereumBalance } from "@/components/EthereumBalance";
 import { Accounts } from "@/features/accounts/Accounts";
-import { GlobalState } from "@/hooks/useGlobalState";
+import { GlobalState } from "@/lib/GlobalState";
 import { use } from "react";
 import type { Address } from "viem";
 

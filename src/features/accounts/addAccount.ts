@@ -1,4 +1,4 @@
-import { GlobalState } from "@/hooks/useGlobalState";
+import { GlobalState } from "@/lib/GlobalState";
 import type { Account } from "./types";
 
 export const addAccount = (account: Account) =>
