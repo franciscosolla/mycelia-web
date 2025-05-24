@@ -20,10 +20,7 @@ import {
  * console.log(balances[0].contractAddress, balances[0].tokenBalance);
  */
 export const getAlchemyTokenBalances = async (address: string) => {
-  const response: {
-    tokenBalances: TokenBalance[];
-    address: string;
-  } = { address, tokenBalances: [] };
+  let tokenBalances: TokenBalance[] = [];
 
   let pageKey: string | undefined = undefined;
 
@@ -41,12 +38,10 @@ export const getAlchemyTokenBalances = async (address: string) => {
     }
 
     pageKey = result.pageKey;
-    response.tokenBalances = response.tokenBalances.concat(
-      result.tokenBalances
-    );
+    tokenBalances = tokenBalances.concat(result.tokenBalances);
 
     if (!pageKey) {
-      return response;
+      return tokenBalances;
     }
   }
 };
