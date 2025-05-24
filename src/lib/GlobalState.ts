@@ -31,7 +31,9 @@ export class GlobalState {
   }
 
   static hydrate() {
-    const serializedStore = localStorage.getItem("store");
+    if (typeof window === "undefined") return;
+
+    const serializedStore = window?.localStorage.getItem("store");
     if (serializedStore) {
       this.store = JSON.parse(serializedStore);
     }

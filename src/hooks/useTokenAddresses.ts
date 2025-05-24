@@ -22,7 +22,7 @@ import { useAlchemyTokenBalances } from "./useAlchemyTokenBalances";
  * // tokenAddresses = ["0xA0b8...", "0xC02a..."]
  */
 export const useTokenAddresses = (walletAddress: Address | undefined) => {
-  const { data: tokenBalances, ...state } =
+  const { data: { tokenBalances } = {}, ...state } =
     useAlchemyTokenBalances(walletAddress);
 
   const tokenAddresses = useMemo(

@@ -5,8 +5,8 @@ import * as bitcoin from "bitcoinjs-lib";
 import { derivePath } from "ed25519-hd-key";
 import * as ecc from "tiny-secp256k1";
 import { mnemonicToAccount } from "viem/accounts";
-import type { BitcoinWallet } from "../wallet/types";
-import type { Account } from "./types";
+import type { BitcoinWallet } from "../../wallet/types";
+import type { Account } from "../types";
 
 export const getAccountFromMnemonic = (mnemonic: string): Account => {
   return {

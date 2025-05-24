@@ -1,7 +1,6 @@
 "use client";
 import { EthereumBalance } from "@/components/EthereumBalance";
-import { Accounts } from "@/features/accounts/Accounts";
-import { useAccount } from "@/features/accounts/useAccount";
+import { useAccount } from "@/features/accounts/hooks/useAccount";
 import { useRouter } from "next/navigation";
 import { use } from "react";
 
@@ -20,10 +19,6 @@ export default function Page({
 
   return (
     <>
-      <header className="flex flex-row items-center justify-end p-2">
-        <Accounts />
-      </header>
-
       <main className="flex flex-col flex-1 pt-4 px-2">
         {account ? <EthereumBalance address={account.ethereum} /> : null}
       </main>

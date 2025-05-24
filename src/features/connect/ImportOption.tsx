@@ -3,8 +3,8 @@
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { Modal } from "../../components/Modal";
-import { addAccount } from "../accounts/addAccount";
-import { getAccountFromMnemonic } from "../accounts/getAccountFromMnemonic";
+import { addAccount } from "../accounts/lib/addAccount";
+import { getAccountFromMnemonic } from "../accounts/lib/getAccountFromMnemonic";
 import { Option } from "./Option";
 
 export const ImportOption = () => {

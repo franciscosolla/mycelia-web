@@ -6,20 +6,18 @@ import { useCallback } from "react";
 import { useAccounts } from "./useAccounts";
 
 export const useAccount = (accountId: string) => {
-  const { accounts, setAccounts } = useAccounts();
+  const [accounts, setAccounts] = useAccounts();
 
-  const account = accounts.get(accountId);
+  const account = accounts?.[Number(accountId)];
 
   const setAccount = useCallback(
     (account: Account | ((current: Account | undefined) => Account)) => {
       setAccounts((current) => {
-        const next = new Map(current);
-        next.set(
-          accountId,
+        const next = current ? [...current] : [];
+        next[Number(accountId)] =
           typeof account === "function"
-            ? account(next.get(accountId)!)
-            : account
-        );
+            ? account(next[Number(accountId)])
+            : account;
         return next;
       });
     },

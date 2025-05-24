@@ -1,5 +1,5 @@
-import type { Wallet } from "../wallet/types";
-import type { Account } from "./types";
+import type { Wallet } from "../../wallet/types";
+import type { Account } from "../types";
 
 export const getFromLocalStorage = <Value, Fallback>(
   key: string,

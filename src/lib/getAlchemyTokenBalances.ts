@@ -19,8 +19,12 @@ import {
  * const balances = await getAlchemyTokenBalances("0xabc123...");
  * console.log(balances[0].contractAddress, balances[0].tokenBalance);
  */
-export const getAlchemyTokenBalances = async (walletAddress: string) => {
-  let tokenBalances: TokenBalance[] = [];
+export const getAlchemyTokenBalances = async (address: string) => {
+  const response: {
+    tokenBalances: TokenBalance[];
+    address: string;
+  } = { address, tokenBalances: [] };
+
   let pageKey: string | undefined = undefined;
 
   while (1) {
@@ -31,16 +35,18 @@ export const getAlchemyTokenBalances = async (walletAddress: string) => {
         type: TokenBalanceType.ERC20,
         pageKey,
       };
-      result = await alchemy.core.getTokenBalances(walletAddress, options);
+      result = await alchemy.core.getTokenBalances(address, options);
     } else {
-      result = await alchemy.core.getTokenBalances(walletAddress);
+      result = await alchemy.core.getTokenBalances(address);
     }
 
     pageKey = result.pageKey;
-    tokenBalances = tokenBalances.concat(result.tokenBalances);
+    response.tokenBalances = response.tokenBalances.concat(
+      result.tokenBalances
+    );
 
     if (!pageKey) {
-      return tokenBalances;
+      return response;
     }
   }
 };

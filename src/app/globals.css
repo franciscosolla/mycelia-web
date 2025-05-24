@@ -8,6 +8,10 @@ button {
   cursor: pointer;
 }
 
+@theme {
+  --color-candy-500: #9b87f5;
+}
+
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {

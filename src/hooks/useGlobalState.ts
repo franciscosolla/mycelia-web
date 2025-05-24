@@ -1,3 +1,4 @@
+"use client";
 import {
   GlobalState,
   type StorePath,
@@ -13,7 +14,11 @@ export const useGlobalState = <Path extends StorePath>(path: Path) => {
   useEffect(() => GlobalState.listen(path, setState), [path]);
 
   const set = useCallback(
-    (data: StoreValue<Path>) => GlobalState.set(path, data),
+    (
+      data:
+        | StoreValue<Path>
+        | ((data: StoreValue<Path> | undefined) => StoreValue<Path>)
+    ) => GlobalState.set(path, data),
     [path]
   );
 
