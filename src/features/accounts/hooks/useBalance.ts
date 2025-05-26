@@ -2,6 +2,8 @@ import { useDeFiLlamaPrices } from "@/hooks/useDeFiLlamaPrices";
 import { ETH_ADDRESS } from "@/lib/ethereum";
 import { getAlchemyTokenBalances } from "@/lib/getAlchemyTokenBalances";
 import { useQuery } from "@tanstack/react-query";
+import type { TokenBalance } from "alchemy-sdk";
+import flatMap from "lodash/flatMap";
 import map from "lodash/map";
 import uniq from "lodash/uniq";
 import { erc20Abi, type Address } from "viem";
@@ -22,15 +24,15 @@ export const useBalance = () => {
 
   const ethereumWallets = uniq(map(accounts, "ethereum"));
 
-  const { data: ethereumBalances } = useEthereumBalances(ethereumWallets);
+  const ethereumBalances = useEthereumBalances(ethereumWallets).data;
 
-  let { data: erc20AlchemyBalances } = useQuery({
+  let erc20AlchemyBalances = useQuery({
     queryKey: ["alchemy", "erc20", "balance"],
     queryFn: () => Promise.all(ethereumWallets.map(getAlchemyTokenBalances)),
     enabled: !!ethereumWallets.length,
     staleTime: Infinity,
     gcTime: Infinity,
-  });
+  }).data;
 
   erc20AlchemyBalances = erc20AlchemyBalances?.map((balances) => {
     return balances?.filter(
@@ -38,44 +40,20 @@ export const useBalance = () => {
     );
   });
 
-  const erc20Contracts =
-    erc20AlchemyBalances?.flatMap(
-      (tokens, index) =>
-        tokens?.map(({ contractAddress }) => ({
-          address: contractAddress as Address,
-          abi: erc20Abi,
-          functionName: "balanceOf",
-          args: [ethereumWallets[index]],
-        })) ?? []
-    ) ?? [];
+  const erc20Contracts = flatMap(erc20AlchemyBalances, (tokens, index) =>
+    map(tokens, toContract(ethereumWallets[index]))
+  );
 
-  const { data: erc20Balances } = useReadContracts({
-    contracts: erc20Contracts,
-    query: {
-      enabled: !!erc20Contracts?.length,
-      staleTime: 5000,
-      gcTime: Infinity,
-    },
-  });
+  const erc20Balances = useErc20Balances(erc20Contracts).data;
 
-  const { data: erc20Prices } = useDeFiLlamaPrices([
+  const erc20Prices = useDeFiLlamaPrices([
     ETH_ADDRESS,
-    ...new Set(erc20Contracts.map(({ address }) => address)).values(),
-  ]);
+    ...uniq(map(erc20Contracts, "address")),
+  ]).data;
 
   const balances = ethereumWallets.reduce((acc, wallet, index) => {
-    acc[wallet] = ethereumBalances?.[index]
-      ? [
-          {
-            address: ETH_ADDRESS,
-            balance: ethereumBalances[index],
-            price: erc20Prices?.[`ethereum:${ETH_ADDRESS}`]?.price ?? 0,
-            decimals: erc20Prices?.[`ethereum:${ETH_ADDRESS}`]?.decimals ?? 0,
-            symbol: erc20Prices?.[`ethereum:${ETH_ADDRESS}`]?.symbol ?? "",
-          },
-        ]
-      : [];
-
+    const balance = ethereumBalances?.[index];
+    acc[wallet] = balance ? [toBalance(ETH_ADDRESS, balance, erc20Prices)] : [];
     return acc;
   }, {} as Record<Address, Balance[]>);
 
@@ -83,15 +61,42 @@ export const useBalance = () => {
     const balance = erc20Balances?.[index].result;
 
     if (balance) {
-      balances[wallet].push({
-        address,
-        balance,
-        price: erc20Prices?.[`ethereum:${address}`]?.price ?? 0,
-        decimals: erc20Prices?.[`ethereum:${address}`]?.decimals ?? 0,
-        symbol: erc20Prices?.[`ethereum:${address}`]?.symbol ?? "",
-      });
+      balances[wallet].push(toBalance(address, balance, erc20Prices));
     }
   });
 
   return balances;
 };
+
+const toContract =
+  (wallet: Address) =>
+  ({ contractAddress }: TokenBalance) => ({
+    address: contractAddress as Address,
+    abi: erc20Abi,
+    functionName: "balanceOf",
+    args: [wallet],
+  });
+
+const useErc20Balances = (
+  contracts: ReturnType<ReturnType<typeof toContract>>[]
+) =>
+  useReadContracts({
+    contracts,
+    query: {
+      enabled: !!contracts.length,
+      staleTime: 5000,
+      gcTime: Infinity,
+    },
+  });
+
+const toBalance = (
+  address: Address,
+  balance: string | number | bigint,
+  prices: ReturnType<typeof useDeFiLlamaPrices>["data"]
+) => ({
+  address,
+  balance,
+  price: prices?.[`ethereum:${address}`]?.price ?? 0,
+  decimals: prices?.[`ethereum:${address}`]?.decimals ?? 0,
+  symbol: prices?.[`ethereum:${address}`]?.symbol ?? "",
+});
