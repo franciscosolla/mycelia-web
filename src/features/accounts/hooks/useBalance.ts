@@ -54,6 +54,7 @@ export const useBalance = () => {
   const balances = ethereumWallets.reduce((acc, wallet, index) => {
     const balance = ethereumBalances?.[index];
     acc[wallet] = balance ? [toBalance(ETH_ADDRESS, balance, erc20Prices)] : [];
+
     return acc;
   }, {} as Record<Address, Balance[]>);
 

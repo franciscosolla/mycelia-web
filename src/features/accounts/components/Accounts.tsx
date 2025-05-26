@@ -1,6 +1,9 @@
+import sumby from "lodash/sumBy";
 import { UserRoundPlus } from "lucide-react";
 import { useAccountStore } from "../hooks/useAccountStore";
+import { useBalance } from "../hooks/useBalance";
 import { useTotalBalance } from "../hooks/useTotalBalance";
+import { toPrice } from "../lib/toPrice";
 import { Title } from "./Title";
 
 export const Accounts = () => {
@@ -30,14 +33,17 @@ export const Accounts = () => {
 };
 
 const Account = ({ index }: { index: number }) => {
-  const account = useAccountStore((state) => state.accounts[index]);
-  const totalBalance = useTotalBalance();
+  const ethereumWallet = useAccountStore(
+    (state) => state.accounts[index].ethereum
+  );
+
+  const balance = sumby(useBalance()[ethereumWallet], toPrice);
 
   return (
     <div className="flex flex-col bg-stone-50 rounded-md p-3">
       <Title index={index} />
       <h1 className="text-md text-stone-950">
-        ${totalBalance.toLocaleString("en-US", { maximumFractionDigits: 2 })}
+        ${balance.toLocaleString("en-US", { maximumFractionDigits: 2 })}
       </h1>
     </div>
   );

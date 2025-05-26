@@ -1,16 +1,14 @@
 "use client";
 import sumBy from "lodash/sumBy";
-import { useBalance, type Balance } from "./useBalance";
+import { toPrice } from "../lib/toPrice";
+import { useBalance } from "./useBalance";
 
 export const useTotalBalance = () => {
   const allBalances = useBalance();
 
   const totalBalance = sumBy(Object.values(allBalances), (balances) =>
-    sumBy(balances, calculateBalance)
+    sumBy(balances, toPrice)
   );
 
   return totalBalance;
 };
-
-const calculateBalance = ({ balance, price, decimals }: Balance) =>
-  (Number(balance) / 10 ** decimals) * price;
