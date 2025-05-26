@@ -2,15 +2,25 @@ import { useDeFiLlamaPrices } from "@/hooks/useDeFiLlamaPrices";
 import { ETH_ADDRESS } from "@/lib/ethereum";
 import { getAlchemyTokenBalances } from "@/lib/getAlchemyTokenBalances";
 import { useQuery } from "@tanstack/react-query";
+import map from "lodash/map";
+import uniq from "lodash/uniq";
 import { erc20Abi, type Address } from "viem";
 import { useReadContracts } from "wagmi";
-import { useAccounts } from "./useAccounts";
+import { useAccountStore } from "./useAccountStore";
 import { useEthereumBalances } from "./useEthereumBalances";
 
-export const useBalance = () => {
-  const [accounts] = useAccounts();
+export interface Balance {
+  address: Address;
+  balance: string | number | bigint;
+  price: number;
+  decimals: number;
+  symbol: string;
+}
 
-  const ethereumWallets = accounts?.map((account) => account.ethereum) ?? [];
+export const useBalance = () => {
+  const accounts = useAccountStore.use.accounts();
+
+  const ethereumWallets = uniq(map(accounts, "ethereum"));
 
   const { data: ethereumBalances } = useEthereumBalances(ethereumWallets);
 
@@ -67,7 +77,7 @@ export const useBalance = () => {
       : [];
 
     return acc;
-  }, {} as Record<Address, { address: Address; balance: string | number | bigint; price: number; decimals: number; symbol: string }[]>);
+  }, {} as Record<Address, Balance[]>);
 
   erc20Contracts.forEach(({ address, args: [wallet] }, index) => {
     const balance = erc20Balances?.[index].result;

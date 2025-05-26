@@ -1,9 +1,8 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { Modal } from "../../components/Modal";
-import { addAccount } from "../accounts/lib/addAccount";
+import { useAccountStore } from "../accounts/hooks/useAccountStore";
 import { getAccountFromMnemonic } from "../accounts/lib/getAccountFromMnemonic";
 import { Option } from "./Option";
 
@@ -27,8 +26,8 @@ export const ImportOption = () => {
 };
 
 const ImportModal = () => {
-  const router = useRouter();
   const [phrase, setPhrase] = useState<string[]>(Array(12).fill(""));
+  const addAccount = useAccountStore.use.addAccount();
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
@@ -109,8 +108,7 @@ const ImportModal = () => {
       <button
         onClick={() => {
           const mnemonic = phrase.join(" ").trim();
-          const accounts = addAccount(getAccountFromMnemonic(mnemonic));
-          router.push(`/account/${accounts.length - 1}`);
+          addAccount(getAccountFromMnemonic(mnemonic));
         }}
         className="mt-4 w-full p-2 bg-stone-600 text-stone-50 rounded-lg hover:bg-stone-500 transition-all duration-400"
       >

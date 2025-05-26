@@ -1,11 +1,11 @@
-import { AccountView } from "@/features/accounts/components/AccountView";
+import { AccountSection } from "@/features/accounts/components/AccountSection";
 import { Connect } from "@/features/connect/Connect";
 
 export default function Beta() {
   return (
     <>
       <header>
-        <AccountView />
+        <AccountSection />
       </header>
       <main className="flex flex-col flex-1 pt-4 px-2 items-end justify-end">
         <Connect />

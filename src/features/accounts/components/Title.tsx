@@ -1,63 +1,36 @@
 "use client";
 
-import { Check, Copy, Menu } from "lucide-react";
+import { Check, Copy } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { useAccounts } from "../hooks/useAccounts";
-import { useTotalBalance } from "../hooks/useTotalBalance";
-import type { Account } from "../types";
+import { useEffect, useRef, useState } from "react";
+import { useAccountStore } from "../hooks/useAccountStore";
 
-export const AccountView = () => {
-  const [accounts] = useAccounts();
+export const Title = ({ index }: { index: number }) => {
+  const account = useAccountStore((state) => state.accounts[index]);
+  const ref = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
 
-  if (!accounts?.length) {
-    return null;
-  }
+  const toggle = () => setOpen((prev) => !prev);
 
-  const hasMultipleAccounts = accounts.length > 1;
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) =>
+      setOpen(!!ref.current?.contains(e.target as Node));
 
-  return hasMultipleAccounts ? (
-    <Accounts accounts={accounts} />
-  ) : (
-    <Account account={accounts[0]} />
-  );
-};
+    document.addEventListener("click", handleClickOutside);
 
-const Accounts = ({ accounts }: { accounts: Account[] }) => {
-  return (
-    <div className="bg-candy-500 p-4 rounded-md m-2 font-bold flex">
-      <div className="flex-1">
-        <h2 className="text-sm text-stone-100">Solla</h2>
-        <h1 className="text-xl text-stone-50">$68.82</h1>
-      </div>
-      <Addresses account={accounts[0]} />
-    </div>
-  );
-};
-
-const Account = ({ account }: { account: Account }) => {
-  const totalBalance = useTotalBalance();
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
 
   return (
-    <div className="bg-candy-500 p-4 rounded-md m-2 font-bold flex items-start">
-      <div className="flex-1 flex flex-col gap-1.5">
-        <Addresses account={account} />
-        <h1 className="text-2xl text-stone-50">
-          ${totalBalance.toLocaleString("en-US", { maximumFractionDigits: 2 })}
-        </h1>
-      </div>
-      <Menu className="text-stone-50" size={18} />
-    </div>
-  );
-};
-
-const Addresses = ({ account }: { account: Account }) => {
-  return (
-    <div className="group relative cursor-pointer w-fit">
-      <h2 className="text-lg text-stone-200 flex items-center gap-1">
-        Solla <Copy size={16} />
+    <div className="group relative cursor-pointer w-fit" onClick={toggle}>
+      <h2 ref={ref} className="text-sm text-stone-950 flex items-center gap-4">
+        {account.name ?? `Account ${index}`} <Copy size={14} />
       </h2>
-      <div className="hidden group-hover:block absolute -top-1 left-full pl-2">
+      <div
+        className={`${
+          open ? "" : "hidden"
+        } group-hover:block absolute -top-1 left-full pl-2 z-50`}
+      >
         <article className="bg-stone-950 p-2 rounded-md text-stone-50 flex flex-col gap-2 shadow">
           <Network network="ethereum" address={account.ethereum} />
           <Network network="solana" address={account.solana} />

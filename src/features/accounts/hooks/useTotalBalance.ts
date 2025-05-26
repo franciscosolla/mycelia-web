@@ -1,17 +1,16 @@
 "use client";
-import { useBalance } from "./useBalance";
+import sumBy from "lodash/sumBy";
+import { useBalance, type Balance } from "./useBalance";
 
 export const useTotalBalance = () => {
-  const erc20 = useBalance();
+  const allBalances = useBalance();
 
-  const totalBalance = Object.values(erc20).reduce((acc, balances) => {
-    acc += balances.reduce((acc, { balance, price, decimals }) => {
-      const weightedBalance = Number(balance) / 10 ** decimals;
-      return acc + weightedBalance * price;
-    }, 0);
-
-    return acc;
-  }, 0);
+  const totalBalance = sumBy(Object.values(allBalances), (balances) =>
+    sumBy(balances, calculateBalance)
+  );
 
   return totalBalance;
 };
+
+const calculateBalance = ({ balance, price, decimals }: Balance) =>
+  (Number(balance) / 10 ** decimals) * price;

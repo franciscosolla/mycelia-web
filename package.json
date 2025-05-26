@@ -48,10 +48,12 @@
     "react-dom": "^19.0.0",
     "tiny-secp256k1": "^2.2.3",
     "viem": "^2.28.0",
-    "wagmi": "^2.15.0"
+    "wagmi": "^2.15.0",
+    "zustand": "^5.0.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@redux-devtools/extension": "^3.3.0",
     "@tailwindcss/postcss": "^4",
     "@types/bip32": "^1.0.2",
     "@types/bitcoinjs-lib": "^4.0.1",
