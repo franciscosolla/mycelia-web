@@ -1,5 +1,5 @@
 import { AccountSection } from "@/features/accounts/components/AccountSection";
-import { Tokens } from "@/features/accounts/components/Tokens";
+import { Coins } from "@/features/accounts/components/Coins";
 import { Connect } from "@/features/connect/Connect";
 
 export default function Beta() {
@@ -9,7 +9,7 @@ export default function Beta() {
         <AccountSection />
       </header>
       <main className="flex flex-col flex-1 pt-4 px-2 justify-between">
-        <Tokens />
+        <Coins />
         <Connect />
       </main>
     </>

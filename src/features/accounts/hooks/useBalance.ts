@@ -17,6 +17,7 @@ export interface Balance {
   price: number;
   decimals: number;
   symbol: string;
+  value: number;
 }
 
 export const useBalance = () => {
@@ -94,10 +95,15 @@ const toBalance = (
   address: Address,
   balance: string | number | bigint,
   prices: ReturnType<typeof useDeFiLlamaPrices>["data"]
-) => ({
-  address,
-  balance,
-  price: prices?.[`ethereum:${address}`]?.price ?? 0,
-  decimals: prices?.[`ethereum:${address}`]?.decimals ?? 0,
-  symbol: prices?.[`ethereum:${address}`]?.symbol ?? "",
-});
+) => {
+  const decimals = prices?.[`ethereum:${address}`]?.decimals ?? 0;
+
+  return {
+    address,
+    balance,
+    price: prices?.[`ethereum:${address}`]?.price ?? 0,
+    decimals,
+    symbol: prices?.[`ethereum:${address}`]?.symbol ?? "",
+    value: Number(balance) / 10 ** decimals,
+  };
+};
