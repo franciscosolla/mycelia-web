@@ -13,7 +13,8 @@ export const Accounts = () => {
   return (
     <div className="bg-candy-500 p-4 rounded-md m-2 font-bold flex flex-col gap-3">
       <div className="flex items-start">
-        <div className="flex-1 flex flex-col gap-1.5">
+        <div className="flex-1 flex flex-col gap-1">
+          <h2 className="text-xs text-stone-200">Total Balance</h2>
           <h1 className="text-2xl text-stone-50">
             $
             {totalBalance.toLocaleString("en-US", { maximumFractionDigits: 2 })}

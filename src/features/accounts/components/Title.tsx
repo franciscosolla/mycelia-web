@@ -21,15 +21,33 @@ export const Title = ({ index }: { index: number }) => {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  const [tranlateX, setTranslateX] = useState(0);
+
+  useEffect(() => {
+    if (!menuRef.current) return;
+    const rect = menuRef.current.getBoundingClientRect();
+    const viewportWidth = window.innerWidth;
+    if (rect.right > viewportWidth) {
+      const overflow = rect.right - viewportWidth;
+      setTranslateX(overflow + 8);
+    }
+  }, []);
+
   return (
     <div className="group relative cursor-pointer w-fit" onClick={toggle}>
       <h2 ref={ref} className="text-sm text-stone-950 flex items-center gap-4">
         {account.name ?? `Account ${index}`} <Copy size={14} />
       </h2>
       <div
+        ref={menuRef}
         className={`${
-          open ? "" : "hidden"
-        } group-hover:block absolute -top-1 left-full pl-2 z-50`}
+          open ? "" : "opacity-0 pointer-events-none"
+        } group-hover:opacity-100 group-hover:pointer-events-auto absolute top-full pt-2 z-50`}
+        style={{
+          translate: `-${tranlateX}px 0px`,
+        }}
       >
         <article className="bg-stone-950 p-2 rounded-md text-stone-50 flex flex-col gap-2 shadow">
           <Network network="ethereum" address={account.ethereum} />

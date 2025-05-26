@@ -11,6 +11,10 @@ export const Account = () => {
   const account = useAccountStore((state) => state.accounts[0]);
   const totalBalance = useTotalBalance();
 
+  if (!account) {
+    return null;
+  }
+
   return (
     <div className="bg-candy-500 p-4 rounded-md m-2 font-bold flex items-start">
       <div className="flex-1 flex flex-col gap-1.5">
