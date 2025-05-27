@@ -17,6 +17,7 @@ export const Coins = () => {
           value: sumBy(tokenBalances, "value"),
           usd: sumBy(tokenBalances, toPrice),
         }))
+        .filter(({ usd }) => usd > 0)
         .sort(({ usd: a }, { usd: b }) => b - a),
     [balances]
   );
