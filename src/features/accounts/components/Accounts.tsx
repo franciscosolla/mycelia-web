@@ -1,4 +1,4 @@
-import sumby from "lodash/sumBy";
+import { sumBy } from "@/lib/utils";
 import { UserRoundPlus } from "lucide-react";
 import { useAccountStore } from "../hooks/useAccountStore";
 import { useBalance } from "../hooks/useBalance";
@@ -38,7 +38,7 @@ const Account = ({ index }: { index: number }) => {
     (state) => state.accounts[index].ethereum
   );
 
-  const balance = sumby(useBalance()[ethereumWallet], toPrice);
+  const balance = sumBy(useBalance()[ethereumWallet], toPrice);
 
   return (
     <div className="flex flex-col bg-stone-50 rounded-md p-3">

@@ -1,11 +1,9 @@
 import { useDeFiLlamaPrices } from "@/hooks/useDeFiLlamaPrices";
 import { ETH_ADDRESS } from "@/lib/ethereum";
 import { getAlchemyTokenBalances } from "@/lib/getAlchemyTokenBalances";
+import { getValues, uniq } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import type { TokenBalance } from "alchemy-sdk";
-import flatMap from "lodash/flatMap";
-import map from "lodash/map";
-import uniq from "lodash/uniq";
 import { erc20Abi, type Address } from "viem";
 import { useReadContracts } from "wagmi";
 import { useAccountStore } from "./useAccountStore";
@@ -23,7 +21,7 @@ export interface Balance {
 export const useBalance = () => {
   const accounts = useAccountStore.use.accounts();
 
-  const ethereumWallets = uniq(map(accounts, "ethereum"));
+  const ethereumWallets = uniq(getValues(accounts, "ethereum"));
 
   const ethereumBalances = useEthereumBalances(ethereumWallets).data;
 
@@ -41,15 +39,16 @@ export const useBalance = () => {
     );
   });
 
-  const erc20Contracts = flatMap(erc20AlchemyBalances, (tokens, index) =>
-    map(tokens, toContract(ethereumWallets[index]))
-  );
+  const erc20Contracts =
+    erc20AlchemyBalances?.flatMap(
+      (tokens, index) => tokens?.map(toContract(ethereumWallets[index])) ?? []
+    ) ?? [];
 
   const erc20Balances = useErc20Balances(erc20Contracts).data;
 
   const erc20Prices = useDeFiLlamaPrices([
     ETH_ADDRESS,
-    ...uniq(map(erc20Contracts, "address")),
+    ...uniq(getValues(erc20Contracts, "address")),
   ]).data;
 
   const balances = ethereumWallets.reduce((acc, wallet, index) => {
