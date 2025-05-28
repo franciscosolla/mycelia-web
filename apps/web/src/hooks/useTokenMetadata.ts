@@ -1,6 +1,6 @@
 "use client";
-import { alchemy } from "@/lib/alchemy";
 import { useQuery } from "@tanstack/react-query";
+import type { TokenMetadataResponse } from "alchemy-sdk";
 import type { Address } from "viem";
 
 export const useTokenMetadata = (tokenAddress: Address) =>
@@ -16,10 +16,17 @@ export const useTokenMetadata = (tokenAddress: Address) =>
         };
       }
 
-      return alchemy.core.getTokenMetadata(tokenAddress);
+      return fetch(`${API_BASE_URL}/coin/metadata/${tokenAddress}`).then(
+        (res) => res.json() as unknown as TokenMetadataResponse
+      );
     },
     staleTime: Infinity,
     gcTime: Infinity,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
+
+const API_BASE_URL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:4000"
+    : "https://mycelia-api.solla.dev";
