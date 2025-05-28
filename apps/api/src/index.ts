@@ -1,17 +1,40 @@
-import Fastify from "fastify";
+import cors from "cors";
+import express from "express";
+import coinRouter from "./routes/coin";
 
-const server = Fastify();
+const app = express();
+const PORT = process.env.PORT || 4000;
 
-server.get("/ping", async () => {
-  return { pong: true };
+const allowedOrigins = [
+  "http://localhost:3000", // Development (Next.js local)
+  "https://mycelia.solla.dev", // Production
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (origin && allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  })
+);
+
+app.use(express.json());
+
+app.use("/coin", coinRouter);
+
+app.get("/ping", (_, res) => {
+  res.json({ pong: true });
 });
 
-const port = Number(process.env.PORT ?? 4000);
+app.use((req, res) => {
+  console.log("404 hit:", req.url);
+  res.status(404).send("Not Found");
+});
 
-server.listen({ port, host: "0.0.0.0" }, (err, address) => {
-  if (err) {
-    console.error(err);
-    process.exit(1);
-  }
-  console.log(`🚀 API listening on ${address}`);
+app.listen(PORT, () => {
+  console.log(`🚀 API listening on http://127.0.0.1:${PORT}`);
 });
