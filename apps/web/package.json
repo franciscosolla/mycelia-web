@@ -1,0 +1,69 @@
+{
+  "name": "@mycelia/web",
+  "version": "0.1.0",
+  "description": "Mycelia Web — A personal Web3 playground for experimenting with wallet connectivity, smart contract interactions, and decentralized UX.",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "check-types": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/franciscosolla/mycelia-web"
+  },
+  "keywords": [
+    "web3",
+    "nextjs",
+    "wagmi",
+    "viem",
+    "ethers",
+    "react",
+    "walletconnect",
+    "ethereum",
+    "dapp",
+    "blockchain"
+  ],
+  "author": "Francisco Solla <fsolla@pm.me>",
+  "license": "MIT",
+  "homepage": "https://mycelia.solla.dev",
+  "dependencies": {
+    "@scure/bip32": "^1.7.0",
+    "@scure/bip39": "^1.6.0",
+    "@solana/kit": "^2.1.1",
+    "@solana/web3.js": "^1.98.2",
+    "@tanstack/react-query": "^5.75.7",
+    "@walletconnect/universal-provider": "^2.20.2",
+    "alchemy-sdk": "^3.5.8",
+    "bip32": "^5.0.0-rc.0",
+    "bip39": "^3.1.0",
+    "bitcoinjs-lib": "^6.1.7",
+    "ed25519-hd-key": "^1.3.0",
+    "lodash": "^4.17.21",
+    "lucide-react": "^0.511.0",
+    "next": "15.3.1",
+    "qrcode.react": "^4.2.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tiny-secp256k1": "^2.2.3",
+    "viem": "^2.28.0",
+    "wagmi": "^2.15.0",
+    "zustand": "^5.0.5"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@redux-devtools/extension": "^3.3.0",
+    "@tailwindcss/postcss": "^4",
+    "@types/bip32": "^1.0.2",
+    "@types/bitcoinjs-lib": "^4.0.1",
+    "@types/lodash": "^4.17.17",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.1",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
