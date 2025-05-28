@@ -6,7 +6,9 @@ server.get("/ping", async () => {
   return { pong: true };
 });
 
-server.listen({ port: 4000, host: "0.0.0.0" }, (err, address) => {
+const port = Number(process.env.PORT ?? 4000);
+
+server.listen({ port, host: "0.0.0.0" }, (err, address) => {
   if (err) {
     console.error(err);
     process.exit(1);
