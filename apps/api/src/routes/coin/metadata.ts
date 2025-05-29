@@ -1,6 +1,6 @@
 import { Alchemy, Network } from "alchemy-sdk";
 import express from "express";
-import { PrismaClient } from "../../generated/prisma";
+import { PrismaClient } from "../../../generated/prisma";
 
 const router = express.Router();
 const prisma = new PrismaClient();
