@@ -17,9 +17,11 @@
   "license": "ISC",
   "homepage": "https://mycelia.solla.dev",
   "dependencies": {
+    "@prisma/client": "^6.8.2",
     "alchemy-sdk": "^3.5.10",
     "cors": "^2.8.5",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "prisma": "^6.8.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.18",
