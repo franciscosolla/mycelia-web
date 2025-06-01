@@ -50,7 +50,7 @@ const WalletOptions = () => {
       <h2 className="text-2xl font-bold px-2 text-stone-50">
         Tap into the network
       </h2>
-      <ul className="flex flex-row gap-2 px-2 items-end overflow-x-scroll no-scrollbar">
+      <ul className="flex flex-row gap-2 px-2 items-end overflow-x-scroll scrollbar-hidden">
         {wallets.map((wallet) => (
           <WalletOption
             key={wallet.name}

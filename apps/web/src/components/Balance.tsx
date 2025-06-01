@@ -20,7 +20,7 @@ export const Balance = () => {
           {`$${totalUsd}`.slice(0, 10)}
         </h3>
       </header>
-      <main className="flex flex-row gap-2 overflow-x-scroll no-scrollbar">
+      <main className="flex flex-row gap-2 overflow-x-scroll scrollbar-hidden">
         {tokens?.map(({ tokenAddress, balance, coin }) => (
           <Token
             key={tokenAddress as string}

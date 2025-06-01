@@ -46,10 +46,10 @@ export default function Account() {
         <header className="flex items-center justify-between w-full">
           <div className="flex items-end">
             {account.name ? <h1>{account.name}</h1> : null}
-            <div className="size-23.5 bg-theme-100 rounded-full flex items-center justify-center text-theme-800">
+            <div className="size-23.5 bg-mycelia-100 rounded-full flex items-center justify-center text-mycelia-850">
               <User size={55} />
             </div>
-            <button className="size-6 bg-theme-50 rounded-full flex items-center justify-center -mt-5 -ml-8 text-theme-800">
+            <button className="size-6 bg-mycelia-50 rounded-full flex items-center justify-center -mt-5 -ml-8 text-mycelia-850">
               <ChevronDown size={19} />
             </button>
           </div>
@@ -91,8 +91,8 @@ export default function Account() {
           </div>
         </header>
       </div>
-      <div className="px-6 pb-6 pt-2 flex flex-col items-center border-t border-white rounded-t-md bg-theme-50 dark:bg-theme-900 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
-        <button className="dark:bg-theme-100 bg-theme-800 rounded-full w-15 h-1 mb-4" />
+      <div className="px-6 pb-6 pt-2 flex flex-col items-center border-t border-white rounded-t-md bg-mycelia-50 dark:bg-mycelia-900 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+        <button className="dark:bg-mycelia-100 bg-mycelia-850 rounded-full w-15 h-1 mb-4" />
         <nav className="flex gap-3 items-center justify-between">
           <ActionLink icon="banknote" href="/ramp" label="Buy/Sell" />
           <ActionLink icon="send-to-back" href="/swap" label="Swap" />
@@ -117,8 +117,8 @@ const Tab = ({
     className={clsx(
       "px-2 py-1 font-medium border-t",
       disabled
-        ? "border-theme-800 text-theme-800 dark:border-theme-50 dark:text-theme-50"
-        : "border-theme-100 text-theme-100 dark:border-theme-800 dark:text-theme-800"
+        ? "border-mycelia-850 text-mycelia-850 dark:border-mycelia-50 dark:text-mycelia-50"
+        : "border-mycelia-100 text-mycelia-100 dark:border-mycelia-850 dark:text-mycelia-850"
     )}
     disabled={disabled}
     onClick={onClick}
@@ -194,7 +194,7 @@ const Coin = ({
           className="size-10.5"
         />
       ) : (
-        <div className="size-10.5 rounded-full bg-theme-800" />
+        <div className="size-10.5 rounded-full bg-mycelia-850" />
       )}
       <h1 className="text-lg">{name}</h1>
       <div className="text-right flex-1">

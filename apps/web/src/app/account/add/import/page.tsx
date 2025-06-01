@@ -78,11 +78,11 @@ export default function Page() {
         {new Array(12).fill(null).map((_, index) => (
           <div
             key={`word-${index}`}
-            className="bg-theme-100 rounded-md p-2 flex items-center gap-1 text-theme-800 drop-shadow-md"
+            className="bg-mycelia-100 rounded-md p-2 flex items-center gap-1 text-mycelia-850 drop-shadow-md"
             onKeyDown={handleKeyDown(index)}
           >
             <span className="text-sm font-bold">{`${index + 1}.`}</span>
-            <div className="flex-1 overflow-x-scroll no-scrollbar">
+            <div className="flex-1 overflow-x-scroll scrollbar-hidden">
               <input
                 id={`input-${index}`}
                 type="text"
@@ -97,7 +97,7 @@ export default function Page() {
       </div>
       <button
         onClick={handleSubmit}
-        className="flex gap-2 items-center justify-center mt-4 w-full p-2 bg-theme-100 text-theme-800 font-semibold rounded-lg drop-shadow-md"
+        className="flex gap-2 items-center justify-center mt-4 w-full p-2 bg-mycelia-100 text-mycelia-850 font-semibold rounded-lg drop-shadow-md"
       >
         <KeyRound size={18} />
         Import account

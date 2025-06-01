@@ -63,7 +63,7 @@ const ConnectLink = ({
     href={href}
     className={clsx(
       className,
-      "bg-theme-100 rounded-sm text-theme-800 drop-shadow-md flex gap-4 items-center justify-center font-medium px-2 py-4"
+      "bg-mycelia-100 rounded-sm text-mycelia-850 drop-shadow-md flex gap-4 items-center justify-center font-medium px-2 py-4"
     )}
   >
     <DynamicIcon name={icon} size={42} />

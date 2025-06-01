@@ -23,7 +23,7 @@ export const Coins = () => {
   );
 
   return (
-    <div className="flex gap-2 overflow-x-scroll no-scrollbar">
+    <div className="flex gap-2 overflow-x-scroll scrollbar-hidden">
       {coins.map(({ address, value, usd }) => (
         <Coin key={address} address={address} value={value} usd={usd} />
       ))}

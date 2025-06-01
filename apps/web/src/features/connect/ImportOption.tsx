@@ -81,7 +81,7 @@ const ImportModal = () => {
             }}
           >
             <span className="text-sm font-bold">{`${index + 1}.`}</span>
-            <div className="flex-1 overflow-x-scroll no-scrollbar">
+            <div className="flex-1 overflow-x-scroll scrollbar-hidden">
               <input
                 id={`input-${index}`}
                 type="text"
