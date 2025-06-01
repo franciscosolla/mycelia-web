@@ -24,7 +24,7 @@ export const AccountButton = ({
           <h1 className="text-center font-bold">
             {account.name ?? `Account ${account.ethereum.slice(-1)}`}
           </h1>
-          <Network network="ethereum" address={account.ethereum} />
+          <Network network="ethereum" address={account.ethereum[0]} />
         </article>
       </div>
     </div>

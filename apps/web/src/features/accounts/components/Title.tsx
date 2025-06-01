@@ -50,9 +50,9 @@ export const Title = ({ index }: { index: number }) => {
         }}
       >
         <article className="bg-stone-950 p-2 rounded-md text-stone-50 flex flex-col gap-2 shadow">
-          <Network network="ethereum" address={account.ethereum} />
-          <Network network="solana" address={account.solana} />
-          <Network network="bitcoin" address={account.bitcoin} />
+          <Network network="ethereum" address={account.ethereum[0]} />
+          <Network network="solana" address={account.solana[0]} />
+          <Network network="bitcoin" address={account.bitcoin[0]} />
         </article>
       </div>
     </div>

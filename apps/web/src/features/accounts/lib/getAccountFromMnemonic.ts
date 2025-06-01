@@ -10,11 +10,11 @@ import type { Account } from "../types";
 
 export const getAccountFromMnemonic = (mnemonic: string): Account => {
   return {
-    ethereum: mnemonicToAccount(mnemonic).address,
-    solana: getSolanaAddressFromMnemonic(mnemonic),
-    bitcoin: getBitcointAddressFromMnemonic(
-      mnemonic
-    ) as BitcoinWallet["address"],
+    ethereum: [mnemonicToAccount(mnemonic).address],
+    solana: [getSolanaAddressFromMnemonic(mnemonic)],
+    bitcoin: [
+      getBitcointAddressFromMnemonic(mnemonic) as BitcoinWallet["address"],
+    ],
   };
 };
 

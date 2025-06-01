@@ -35,7 +35,7 @@ export const Accounts = () => {
 
 const Account = ({ index }: { index: number }) => {
   const ethereumWallet = useAccountStore(
-    (state) => state.accounts[index].ethereum
+    (state) => state.accounts[index].ethereum[0]
   );
 
   const balance = sumBy(useBalance()[ethereumWallet], toPrice);

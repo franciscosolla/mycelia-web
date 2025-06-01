@@ -4,6 +4,7 @@ import { getAlchemyTokenBalances } from "@/lib/getAlchemyTokenBalances";
 import { getValues, uniq } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import type { TokenBalance } from "alchemy-sdk";
+import { useMemo } from "react";
 import { erc20Abi, type Address } from "viem";
 import { useReadContracts } from "wagmi";
 import { useAccountStore } from "./useAccountStore";
@@ -19,9 +20,12 @@ export interface Balance {
 }
 
 export const useBalance = () => {
-  const accounts = useAccountStore.use.accounts();
+  const account = useAccountStore.use.current();
 
-  const ethereumWallets = uniq(getValues(accounts, "ethereum"));
+  const ethereumWallets = useMemo(
+    () => account?.ethereum ?? [],
+    [account?.ethereum]
+  );
 
   const ethereumBalances = useEthereumBalances(ethereumWallets).data;
 
@@ -39,11 +43,13 @@ export const useBalance = () => {
     );
   });
 
-  const erc20Contracts =
-    erc20AlchemyBalances?.flatMap(
-      (tokens, index) => tokens?.map(toContract(ethereumWallets[index])) ?? []
-    ) ?? [];
-
+  const erc20Contracts = useMemo(
+    () =>
+      erc20AlchemyBalances?.flatMap(
+        (tokens, index) => tokens?.map(toContract(ethereumWallets[index])) ?? []
+      ) ?? [],
+    [erc20AlchemyBalances, ethereumWallets]
+  );
   const erc20Balances = useErc20Balances(erc20Contracts).data;
 
   const erc20Prices = useDeFiLlamaPrices([
@@ -51,20 +57,32 @@ export const useBalance = () => {
     ...uniq(getValues(erc20Contracts, "address")),
   ]).data;
 
-  const balances = ethereumWallets.reduce((acc, wallet, index) => {
-    const balance = ethereumBalances?.[index];
-    acc[wallet] = balance ? [toBalance(ETH_ADDRESS, balance, erc20Prices)] : [];
+  const balances = useMemo(() => {
+    const balances = ethereumWallets.reduce((acc, wallet, index) => {
+      const balance = ethereumBalances?.[index];
+      acc[wallet] = balance
+        ? [toBalance(ETH_ADDRESS, balance, erc20Prices)]
+        : [];
 
-    return acc;
-  }, {} as Record<Address, Balance[]>);
+      return acc;
+    }, {} as Record<Address, Balance[]>);
 
-  erc20Contracts.forEach(({ address, args: [wallet] }, index) => {
-    const balance = erc20Balances?.[index].result;
+    erc20Contracts.forEach(({ address, args: [wallet] }, index) => {
+      const balance = erc20Balances?.[index].result;
 
-    if (balance) {
-      balances[wallet].push(toBalance(address, balance, erc20Prices));
-    }
-  });
+      if (balance) {
+        balances[wallet].push(toBalance(address, balance, erc20Prices));
+      }
+    });
+
+    return balances;
+  }, [
+    erc20Balances,
+    erc20Contracts,
+    erc20Prices,
+    ethereumBalances,
+    ethereumWallets,
+  ]);
 
   return balances;
 };

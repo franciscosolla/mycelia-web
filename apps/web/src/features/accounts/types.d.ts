@@ -6,7 +6,7 @@ import type {
 
 export type Account = {
   name?: string;
-  ethereum: EthereumWallet["address"];
-  solana: SolanaWallet["address"];
-  bitcoin: BitcoinWallet["address"];
+  ethereum: EthereumWallet["address"][];
+  solana: SolanaWallet["address"][];
+  bitcoin: BitcoinWallet["address"][];
 };

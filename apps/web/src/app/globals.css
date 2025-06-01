@@ -10,6 +10,10 @@ button {
 
 @theme {
   --color-candy-500: #9b87f5;
+  --color-theme-50: var(--color-white);
+  --color-theme-100: var(--color-gray-200);
+  --color-theme-800: #3e3e3e;
+  --color-theme-900: var(--color-black);
 }
 
 @layer utilities {
