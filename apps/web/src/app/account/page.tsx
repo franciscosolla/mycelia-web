@@ -4,7 +4,7 @@ import { useCoinBalances } from "@/features/accounts/hooks/useCoinBalances";
 import { useTotalBalance } from "@/features/accounts/hooks/useTotalBalance";
 import { useTokenMetadata } from "@/hooks/useTokenMetadata";
 import clsx from "clsx";
-import { ChevronDown, ListFilter, Plus } from "lucide-react";
+import { ChevronDown, ListFilter, Plus, User } from "lucide-react";
 import { DynamicIcon, type IconName } from "lucide-react/dynamic";
 import Image from "next/image";
 import Link from "next/link";
@@ -46,7 +46,9 @@ export default function Account() {
         <header className="flex items-center justify-between w-full">
           <div className="flex items-end">
             {account.name ? <h1>{account.name}</h1> : null}
-            <div className="size-23.5 bg-theme-100 rounded-full" />
+            <div className="size-23.5 bg-theme-100 rounded-full flex items-center justify-center text-theme-800">
+              <User size={55} />
+            </div>
             <button className="size-6 bg-theme-50 rounded-full flex items-center justify-center -mt-5 -ml-8 text-theme-800">
               <ChevronDown size={19} />
             </button>
