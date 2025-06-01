@@ -20,7 +20,7 @@ export default function Page({
   return (
     <>
       <main className="flex flex-col flex-1 pt-4 px-2">
-        {account ? <EthereumBalance address={account.ethereum} /> : null}
+        {account ? <EthereumBalance address={account.ethereum[0]} /> : null}
       </main>
     </>
   );
