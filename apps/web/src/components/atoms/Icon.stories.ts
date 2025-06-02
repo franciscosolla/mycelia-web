@@ -19,37 +19,8 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const xLarge: Story = {
+export const Default: Story = {
   args: {
     name: "eye",
-    size: "xl",
-  },
-};
-
-export const large: Story = {
-  args: {
-    name: "eye",
-    size: "lg",
-  },
-};
-
-export const medium: Story = {
-  args: {
-    name: "eye",
-    size: "md",
-  },
-};
-
-export const small: Story = {
-  args: {
-    name: "eye",
-    size: "sm",
-  },
-};
-
-export const xSmall: Story = {
-  args: {
-    name: "eye",
-    size: "xs",
   },
 };

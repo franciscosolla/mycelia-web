@@ -19,10 +19,9 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const xLarge: Story = {
+export const Default: Story = {
   args: {
     src: "https://www.solla.dev/_next/image?url=%2Ffavicon.webp&w=640&q=75",
-    alt: "Bitcoin Icon",
-    size: "xl",
+    alt: "Profile image",
   },
 };

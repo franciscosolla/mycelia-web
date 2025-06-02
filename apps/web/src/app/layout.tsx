@@ -1,6 +1,6 @@
 import { QueryClientProvider } from "@/lib/QueryClientProvider";
 import { WagmiProvider } from "@/lib/WagmiProvider";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Head from "next/head";
 import "./globals.css";
@@ -62,11 +62,13 @@ export const metadata: Metadata = {
   creator: "Francisco Solla",
 };
 
-export const viewport = {
+export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#000000" },
   ],
+  initialScale: 1,
+  width: "device-width",
 };
 
 export default function RootLayout({

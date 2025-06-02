@@ -1,5 +1,5 @@
 import NextImage from "next/image";
-import type { IconSize } from "./types";
+import type { Size } from "./types";
 
 export const Image = ({
   src,
@@ -8,7 +8,7 @@ export const Image = ({
 }: {
   src: string;
   alt: string;
-  size?: IconSize;
+  size?: Size;
 }) => (
   <NextImage src={src} alt={alt} width={SIZES[size]} height={SIZES[size]} />
 );
