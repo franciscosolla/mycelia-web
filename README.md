@@ -30,7 +30,7 @@ The user experience is designed to be:
 
 | Current                                                                                                    | Direction                                                                                                 |
 | ---------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| ![Mycelia Current Design](https://github.com/user-attachments/assets/9b37b2c4-3811-4f03-9c86-17edbdfd1e83) | ![Mycelia Vision Design](https://github.com/user-attachments/assets/005dc7d3-f16d-43b0-8387-429e72d9b0cf) |
+| ![Mycelia Current Design](https://github.com/user-attachments/assets/52ace6c4-6ff2-428f-8b1d-85dc001522ff) | ![Mycelia Vision Design](https://github.com/user-attachments/assets/e91e32a5-7968-4120-9978-2e28df2b55f5) |
 
 ---
 
