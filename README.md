@@ -3,7 +3,7 @@
 [![Version](https://img.shields.io/badge/version-0.5.0-purple)](https://github.com/franciscosolla/mycelia-web)
 [![License](https://img.shields.io/github/license/franciscosolla/mycelia-web?color=blue)](LICENSE)
 [![Live App](https://img.shields.io/badge/demo-live-success)](https://mycelia.solla.dev)
-[![Design System](https://img.shields.io/badge/design-Figma-blueviolet)](https://www.figma.com/design/cdSqctVxKmW6ujcba09bzt/Mycelia?node-id=14-530&t=73oiTJGYXCCJzUfY-1)
+[![Design System](https://img.shields.io/badge/design-Figma-blueviolet)](https://www.figma.com/design/cdSqctVxKmW6ujcba09bzt/Mycelia?node-id=0-1&p=f&t=AX5JHTBaMtKcPEt4-0)
 
 > A modular, self-custodial, multi-chain, multi-account crypto wallet built to empower users through design.
 
@@ -25,6 +25,8 @@ The user experience is designed to be:
 - **Visually bold**, prioritizing clarity and flow.
 - **Ergonomic**: All controls and interactions are designed to fall within thumb reach (initially for right-handed users, left-hand mode planned).
 - **Exploratory**: Users can seamlessly navigate NFTs, coins, transactions, DeFi positions, and cross-chain balances in a single interface.
+
+> Design System: [Figma](https://www.figma.com/design/cdSqctVxKmW6ujcba09bzt/Mycelia?node-id=0-1&p=f&t=AX5JHTBaMtKcPEt4-0)
 
 ### Preview
 
