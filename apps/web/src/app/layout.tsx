@@ -93,7 +93,7 @@ export default function RootLayout({
             />
           </Head>
           <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen flex flex-col overflow-hidden bg-mycelia-50 dark:bg-mycelia-900 relative dark:text-mycelia-100 text-mycelia-850 max-w-110 mx-auto`}
+            className={`${geistSans.variable} ${geistMono.variable} antialiased h-dvh flex flex-col overflow-hidden bg-mycelia-50 dark:bg-mycelia-900 relative dark:text-mycelia-100 text-mycelia-850 max-w-110 mx-auto`}
           >
             {children}
           </body>
