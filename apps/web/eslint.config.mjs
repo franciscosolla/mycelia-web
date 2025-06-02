@@ -10,14 +10,6 @@ const __dirname = dirname(__filename);
 
 const compat = new FlatCompat({
   baseDirectory: __dirname,
-  "overrides": [
-    {
-      "files": ["tests/**/*"],
-      "env": {
-        "jest": true
-      }
-    }
-  ]
 });
 
 const eslintConfig = [

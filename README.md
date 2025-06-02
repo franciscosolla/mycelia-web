@@ -83,8 +83,8 @@ Coins are treated uniformly across accounts and networks.
 
 ## ✅ Current Capabilities
 
+- Import account through 12 word mnemonic phrase
 - Display token balances and prices in real time
-- See all NFTs and token holdings across accounts in a single unified view
 - Fetch and cache token metadata via custom backend API
 
 ---
